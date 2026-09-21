@@ -107,7 +107,7 @@
 
   --action: oklch(0.13 0 0);
   --action-foreground: oklch(0.98 0 0);
-  --action-surface: oklch(0.92 0 0);
+  --action-surface: oklch(0.13 0 0);
 }
 
 @layer base {
