@@ -25,7 +25,7 @@ export function ChangePicker({
   onSelect: (type: LifeChangeType) => void;
 }) {
   return (
-    <div className="grid overflow-hidden border border-border bg-border sm:grid-cols-2">
+    <div className="grid gap-4 sm:grid-cols-2">
       {SIMULATOR_CHANGE_TYPES.map((type) => {
         const meta = LIFE_CHANGE_META[type];
         const Icon = ICON[type] ?? Briefcase;
@@ -38,17 +38,19 @@ export function ChangePicker({
             onClick={() => onSelect(type)}
             aria-pressed={active}
             className={cn(
-              "flex min-h-32 gap-4 border-b border-r border-border bg-card p-5 text-left transition-colors last:sm:col-span-2",
-              active ? "bg-secondary" : "hover:bg-surface",
+              "group flex min-h-32 gap-4 rounded-xl border border-border bg-card p-5 text-left transition-all hover:border-primary hover:shadow-sm",
+              active ? "border-primary ring-1 ring-primary bg-secondary/50" : ""
             )}
           >
             <span
               className={cn(
-                "grid size-9 shrink-0 place-items-center border border-border",
-                active ? "bg-primary text-primary-foreground" : "bg-surface text-muted-foreground",
+                "grid size-10 shrink-0 place-items-center rounded-full transition-colors",
+                active 
+                  ? "bg-primary text-primary-foreground" 
+                  : "bg-surface text-muted-foreground group-hover:bg-primary/10 group-hover:text-primary",
               )}
             >
-              <Icon className="size-4" aria-hidden />
+              <Icon className="size-5" aria-hidden />
             </span>
             <span>
               <span className="block font-semibold">{meta.label}</span>
