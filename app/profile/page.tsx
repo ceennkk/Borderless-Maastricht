@@ -1,22 +1,20 @@
 "use client";
 
-/** Read-only view of the stored profile, with a way to redo onboarding. */
+/** Editable view of the stored profile, with an option to redo onboarding. */
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { CheckCircle2, CircleSlash, Hourglass, Pencil, RotateCcw } from "lucide-react";
+import { ClipboardList, RotateCcw } from "lucide-react";
 
-import { CountryBadge } from "@/components/shared/country-badge";
 import { PageHeader } from "@/components/shared/page-header";
 import { PersonalDetailsForm } from "@/components/shared/personal-details-form";
+import { ProfileEditForm } from "@/components/shared/profile-edit-form";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useProfile } from "@/hooks/use-profile";
-import { REGISTRATION_STATUS_META } from "@/lib/constants";
-import type { UserProfile } from "@/lib/types";
 
 export default function ProfilePage() {
   const router = useRouter();
-  const { profile, isDemo, ready, reset } = useProfile();
+  const { isDemo, ready, reset } = useProfile();
 
   function resetAllLocalData() {
     const confirmed = window.confirm(
@@ -36,8 +34,8 @@ export default function ProfilePage() {
         action={
           <Button asChild variant="outline">
             <Link href="/onboarding">
-              <Pencil />
-              Update
+              <ClipboardList />
+              Redo questionary
             </Link>
           </Button>
         }
@@ -49,49 +47,8 @@ export default function ProfilePage() {
         </div>
       )}
 
-      <Card className="divide-y divide-border rounded-none">
-        <Row label="Name" value={profile.name} />
-        <Row
-          label="Lives in"
-          value={<CountryBadge country={profile.residenceCountry} city={profile.residenceCity} />}
-        />
-        <Row label="Registered" value={<Registration profile={profile} />} />
-        <Row
-          label="Studies"
-          value={
-            profile.isStudent && profile.studyCountry ? (
-              <CountryBadge country={profile.studyCountry} city={profile.studyCity} />
-            ) : (
-              "Not a student"
-            )
-          }
-        />
-        <Row
-          label="Works"
-          value={
-            profile.isEmployed && profile.workCountry ? (
-              <CountryBadge country={profile.workCountry} city={profile.workCity} />
-            ) : (
-              "Not employed"
-            )
-          }
-        />
-        <Row label="Working hours" value={hours(profile)} />
-        <Row label="Remote work" value={remote(profile)} />
-        <Row
-          label="Citizenship"
-          value={`${profile.citizenship}${profile.euCitizen ? " · EU/EEA" : " · Non-EU"}`}
-        />
-        <Row
-          label="Health insurance"
-          value={
-            profile.healthInsuranceCountry ? (
-              <CountryBadge country={profile.healthInsuranceCountry} />
-            ) : (
-              "Unknown"
-            )
-          }
-        />
+      <Card className="rounded-none p-6 sm:p-8">
+        <ProfileEditForm />
       </Card>
 
       <PersonalDetailsForm />
@@ -104,38 +61,4 @@ export default function ProfilePage() {
       </div>
     </div>
   );
-}
-
-function Registration({ profile }: { profile: UserProfile }) {
-  const status = profile.registrationStatus;
-  if (!status) return <>Unknown</>;
-
-  const Icon =
-    status === "registered" ? CheckCircle2 : status === "in_progress" ? Hourglass : CircleSlash;
-
-  return (
-    <span className="inline-flex items-center gap-1.5">
-      <Icon className="size-4 text-muted-foreground" aria-hidden />
-      {REGISTRATION_STATUS_META[status].short}
-    </span>
-  );
-}
-
-function Row({ label, value }: { label: string; value: React.ReactNode }) {
-  return (
-    <div className="flex flex-wrap items-center justify-between gap-3 px-5 py-4">
-      <span className="text-sm text-muted-foreground">{label}</span>
-      <span className="text-sm font-medium">{value}</span>
-    </div>
-  );
-}
-
-function hours(p: UserProfile): string {
-  return p.isEmployed && p.workHoursPerWeek ? `${p.workHoursPerWeek} hours per week` : "—";
-}
-
-function remote(p: UserProfile): string {
-  if (!p.isEmployed || p.remoteWorkDaysPerWeek === undefined) return "—";
-  if (p.remoteWorkDaysPerWeek === 0) return "Always on site";
-  return `${p.remoteWorkDaysPerWeek} day${p.remoteWorkDaysPerWeek === 1 ? "" : "s"} per week`;
 }

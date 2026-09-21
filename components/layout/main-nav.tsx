@@ -23,8 +23,8 @@ export function MainNav() {
             className={cn(
               "flex items-center gap-3 border-l-2 px-3 py-2.5 text-sm font-medium transition-colors",
               active
-                ? "border-sidebar-foreground bg-sidebar-foreground/10 text-sidebar-foreground"
-                : "border-transparent text-sidebar-foreground/58 hover:border-sidebar-foreground/30 hover:text-sidebar-foreground",
+                ? "border-primary bg-surface text-foreground"
+                : "border-transparent text-muted-foreground hover:border-border hover:text-foreground",
             )}
           >
             <Icon className="size-4 shrink-0" aria-hidden />

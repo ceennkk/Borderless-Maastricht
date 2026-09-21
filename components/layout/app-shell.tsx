@@ -33,10 +33,10 @@ export function AppShell({ children }: { children: ReactNode }) {
   return (
     <div className="min-h-dvh md:flex">
       {/* Desktop sidebar */}
-      <aside className="sticky top-0 hidden h-dvh w-68 shrink-0 flex-col bg-sidebar px-5 py-6 text-sidebar-foreground md:flex">
-        <Logo href="/dashboard" inverted className="px-2" />
+      <aside className="sticky top-0 hidden h-dvh w-68 shrink-0 flex-col border-r border-border bg-card px-5 py-6 md:flex">
+        <Logo href="/dashboard" className="px-2" />
 
-        <p className="mt-3 px-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-sidebar-foreground/45">
+        <p className="mt-3 px-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
           Maastricht Euregio
         </p>
 
@@ -44,10 +44,10 @@ export function AppShell({ children }: { children: ReactNode }) {
           <MainNav />
         </div>
 
-        <div className="space-y-1 border-t border-sidebar-foreground/15 pt-4">
+        <div className="space-y-1 border-t border-border pt-4">
           <Button
             variant="ghost"
-            className="w-full justify-start gap-3 px-3 text-sidebar-foreground/70 hover:bg-sidebar-foreground/8 hover:text-sidebar-foreground"
+            className="w-full justify-start gap-3 px-3 text-muted-foreground hover:bg-surface hover:text-foreground"
             onClick={() => setAskOpen(true)}
           >
             <Sparkles className="size-4" />
@@ -56,7 +56,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           <Button
             asChild
             variant="ghost"
-            className="w-full justify-start gap-3 px-3 text-sidebar-foreground/70 hover:bg-sidebar-foreground/8 hover:text-sidebar-foreground"
+            className="w-full justify-start gap-3 px-3 text-muted-foreground hover:bg-surface hover:text-foreground"
           >
             <Link href="/profile">
               <User className="size-4" />

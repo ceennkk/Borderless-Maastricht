@@ -54,7 +54,7 @@ export function OnboardingWizard({ resetNotice = false }: { resetNotice?: boolea
   return (
     <div className="min-h-dvh bg-surface">
       <header className="mx-auto flex max-w-2xl items-center justify-between px-6 py-6">
-        <Logo />
+        <Logo size="md" />
         <Button asChild variant="ghost" size="sm">
           <Link href="/dashboard">Skip</Link>
         </Button>

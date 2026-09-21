@@ -28,7 +28,7 @@ export default function LandingPage() {
   return (
     <div className="min-h-dvh">
       <header className="mx-auto flex max-w-7xl items-center justify-between border-b border-border px-6 py-6 lg:px-10">
-        <Logo />
+        <Logo size="lg" />
         <Link
           href="/dashboard"
           className="text-sm font-semibold underline decoration-border underline-offset-4 transition-colors hover:decoration-foreground"
