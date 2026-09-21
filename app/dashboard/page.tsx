@@ -7,7 +7,7 @@
 import Link from "next/link";
 import { ArrowRight, Split } from "lucide-react";
 
-import { AttentionSummary } from "@/components/dashboard/attention-summary";
+
 import { CrossBorderHeader } from "@/components/dashboard/cross-border-header";
 import { ImpactGrid } from "@/components/dashboard/impact-grid";
 import { TodoSummary } from "@/components/dashboard/todo-summary";
@@ -29,7 +29,7 @@ export default function DashboardPage() {
 
       <CrossBorderHeader profile={profile} />
 
-      <AttentionSummary impacts={impacts} />
+
 
       <TodoSummary open={open} total={actions.length} />
 
