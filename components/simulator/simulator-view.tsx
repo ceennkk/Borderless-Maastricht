@@ -177,7 +177,7 @@ export function SimulatorView() {
                     setSavedNotice(false);
                   }}
                 >
-                  Simulate
+                  Preview Plan
                   <ArrowRight />
                 </Button>
               </div>

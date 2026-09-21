@@ -29,7 +29,7 @@ className="flex h-full flex-col gap-4 p-5 transition-shadow hover:shadow-md"
 
       {impact.actions.length > 0 && (
         <p className="mt-auto pt-1 text-xs font-medium text-muted-foreground">
-          {impact.actions.length} action{impact.actions.length === 1 ? "" : "s"} suggested
+          {impact.actions.length} to-do{impact.actions.length === 1 ? "" : "s"} suggested
         </p>
       )}
     </Card>

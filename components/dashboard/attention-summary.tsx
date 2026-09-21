@@ -35,7 +35,7 @@ export function AttentionSummary({ impacts }: { impacts: Impact[] }) {
       </div>
       <Button asChild size="sm" className="shrink-0">
         <Link href="/actions">
-          Open action centre
+          Open To-Dos
           <ArrowRight />
         </Link>
       </Button>

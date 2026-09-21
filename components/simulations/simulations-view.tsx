@@ -35,7 +35,7 @@ export function SimulationsView() {
           <div className="space-y-1">
             <p className="font-semibold">No saved plans yet</p>
             <p className="text-sm text-muted-foreground">
-              Run a simulation and save it to review it later.
+              Create a plan and save it to review it later.
             </p>
           </div>
           <Button asChild className="mt-2">
@@ -103,7 +103,7 @@ export function SimulationsView() {
                 </p>
                 <Button asChild size="sm" variant="outline">
                   <Link href={`/simulations/${simulation.id}`}>
-                    Open simulation
+                    View Plan
                     <ArrowRight />
                   </Link>
                 </Button>
