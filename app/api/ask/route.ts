@@ -4,6 +4,10 @@
  * The browser never sees `OPENAI_API_KEY`; it posts a question plus the local
  * profile and impacts, and gets back prose. Implemented with `fetch` rather
  * than a vendor SDK, so the project gains no dependency.
+ *
+ * RAG layer: before calling the model, we retrieve the most relevant chunks
+ * from the Supabase vector store and inject them as grounded source material.
+ * If Supabase is not configured the app degrades gracefully — no crash.
  */
 import { NextResponse } from "next/server";
 
@@ -14,6 +18,7 @@ import {
   suggestFollowUps,
   type AskRequestBody,
 } from "@/lib/ai-prompt";
+import { retrieveContext, formatRagContext, countryFilterFromProfile } from "@/lib/rag";
 
 export const runtime = "nodejs";
 /** Never cache an answer — it is specific to the posted profile. */
@@ -50,17 +55,42 @@ export async function POST(request: Request) {
     );
   }
 
-  const messages = [
-    { role: "system" as const, content: buildSystemPrompt() },
+  // ── RAG: retrieve grounded source chunks ─────────────────────────────────
+  // Runs in parallel with nothing else (first async step), so it adds
+  // only its own latency — typically 200–400 ms for embedding + DB query.
+  const countryFilter = countryFilterFromProfile(body.profile);
+  const ragChunks = await retrieveContext(question, countryFilter);
+  const ragContext = formatRagContext(ragChunks);
+  // ─────────────────────────────────────────────────────────────────────────
+
+  const messages: Array<{ role: "system" | "user" | "assistant"; content: string }> = [
+    { role: "system", content: buildSystemPrompt() },
     {
-      role: "system" as const,
+      role: "system",
       content: `Context for this user:\n\n${buildContextBlock(body.profile, body.impacts ?? [])}`,
     },
+  ];
+
+  // Inject RAG chunks as a third system message when available.
+  // The model is told these are live official excerpts — more trustworthy
+  // than its training data for specific numbers and rules.
+  if (ragContext) {
+    messages.push({
+      role: "system",
+      content:
+        "Official source excerpts retrieved from verified government and authority websites " +
+        "(use these for any specific facts, thresholds, rates or rules — they are more " +
+        "up-to-date than your training data):\n\n" +
+        ragContext,
+    });
+  }
+
+  messages.push(
     ...(body.history ?? [])
       .slice(-LIMITS.historyTurns)
       .map((m) => ({ role: m.role, content: m.text.slice(0, LIMITS.historyText) })),
-    { role: "user" as const, content: question },
-  ];
+    { role: "user", content: question },
+  );
 
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), TIMEOUT_MS);
@@ -82,7 +112,6 @@ export async function POST(request: Request) {
     });
 
     if (!response.ok) {
-      // Log the status only — an upstream body can echo request content.
       console.error(`[api/ask] OpenAI responded ${response.status}`);
       return NextResponse.json(
         { error: "upstream", message: `The model provider returned ${response.status}.` },
@@ -105,6 +134,13 @@ export async function POST(request: Request) {
     return NextResponse.json({
       text,
       suggestions: suggestFollowUps(body.impacts ?? []),
+      // Pass back which sources were used so the UI can display them
+      sources: ragChunks.map((c) => ({
+        name: c.source_name,
+        url: c.url,
+        country: c.country,
+        lastChecked: c.last_crawled_at.slice(0, 10),
+      })),
       mocked: false,
     });
   } catch (error) {
