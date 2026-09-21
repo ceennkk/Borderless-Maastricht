@@ -60,8 +60,7 @@ function DemoNotice() {
   return (
     <div className="flex flex-wrap items-center gap-3 rounded-lg border border-secondary bg-secondary/60 px-4 py-2.5 text-sm">
       <span className="text-muted-foreground">
-        You are looking at <strong className="font-medium text-foreground">Alex</strong>, our demo
-        profile.
+        Demo profile: <strong className="font-medium text-foreground">Alex</strong>
       </span>
       <Button asChild variant="link" size="sm" className="h-auto p-0">
         <Link href="/onboarding">Create your own profile</Link>

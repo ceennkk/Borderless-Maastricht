@@ -74,7 +74,7 @@ export default function LandingPage() {
           <div className="mt-12 flex items-center gap-2 sm:gap-3" aria-label="Netherlands, Germany and Belgium">
             {COUNTRIES.map((country, index) => (
               <div key={country} className="contents">
-                {index > 0 && <span className="border-line block h-2 w-6 shrink-0 sm:w-16" aria-hidden />}
+                {index > 0 && <ArrowRight className="size-4 text-muted-foreground shrink-0" aria-hidden />}
                 <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-sm font-medium">
                   <CountryMark country={country} />
                   {COUNTRY_META[country].name}
@@ -133,7 +133,6 @@ export default function LandingPage() {
 function Fact({ title, body }: { title: string; body: string }) {
   return (
     <div>
-      <span aria-hidden className="border-line block h-2 w-10" />
       <h3 className="mt-4 font-brand text-lg font-semibold">{title}</h3>
       <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{body}</p>
     </div>

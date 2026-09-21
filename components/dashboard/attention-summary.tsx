@@ -18,9 +18,6 @@ export function AttentionSummary({ impacts }: { impacts: Impact[] }) {
         </span>
         <div className="flex-1">
           <p className="font-semibold">Nothing needs your attention</p>
-          <p className="text-sm text-muted-foreground">
-            Everything we can see about your situation is in order.
-          </p>
         </div>
       </Card>
     );
@@ -34,9 +31,6 @@ export function AttentionSummary({ impacts }: { impacts: Impact[] }) {
       <div className="flex-1">
         <p className="font-semibold">
           {count} thing{count === 1 ? "" : "s"} need{count === 1 ? "s" : ""} your attention
-        </p>
-        <p className="text-sm text-muted-foreground">
-          Start with the next practical step. The rest is waiting in your action centre.
         </p>
       </div>
       <Button asChild size="sm" className="shrink-0">

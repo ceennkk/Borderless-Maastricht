@@ -24,7 +24,7 @@ export function TodoSummary({ open, total }: { open: Action[]; total: number }) 
 
   if (open.length === 0) {
     return (
-      <Card className="flex items-center gap-3 rounded-none border-x-0 border-ok/25 bg-ok-surface p-4">
+      <Card className="flex items-center gap-3 border-ok/25 bg-ok-surface p-4">
         <CheckCircle2 className="size-5 shrink-0 text-ok" aria-hidden />
         <p className="text-sm font-medium text-ok-foreground">
           All {total} task{total === 1 ? "" : "s"} done.
@@ -34,7 +34,7 @@ export function TodoSummary({ open, total }: { open: Action[]; total: number }) 
   }
 
   return (
-    <Card className="overflow-hidden rounded-none">
+    <Card className="overflow-hidden">
       <Link href="/actions" className="block transition-colors hover:bg-surface/60">
         <div className="flex items-center justify-between gap-3 border-b border-border px-5 py-3">
           <div className="flex items-baseline gap-2">

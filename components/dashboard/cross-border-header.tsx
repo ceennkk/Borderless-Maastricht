@@ -1,4 +1,4 @@
-import { CheckCircle2, CircleSlash, Hourglass } from "lucide-react";
+import { ArrowRight, CheckCircle2, CircleSlash, Hourglass } from "lucide-react";
 
 import { CountryChip, CountryMark } from "@/components/shared/country-badge";
 import { COUNTRY_META, REGISTRATION_STATUS_META } from "@/lib/constants";
@@ -15,7 +15,6 @@ export function CrossBorderHeader({ profile }: { profile: UserProfile }) {
 
   return (
     <header className="space-y-3">
-      <span aria-hidden className="border-line block h-2 w-12" />
       <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">
         {profile.name ? `Hi ${profile.name}` : "Your cross-border life"}
       </h1>
@@ -23,7 +22,7 @@ export function CrossBorderHeader({ profile }: { profile: UserProfile }) {
       <div className="flex flex-wrap items-center gap-2">
         {countries.map((country, i) => (
           <span key={country} className="flex items-center gap-2">
-            {i > 0 && <span aria-hidden className="border-line block h-2 w-10 sm:w-16" />}
+            {i > 0 && <ArrowRight className="size-4 text-muted-foreground" />}
             <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-sm font-medium">
               <CountryMark country={country} />
               {COUNTRY_META[country].name}
@@ -32,8 +31,6 @@ export function CrossBorderHeader({ profile }: { profile: UserProfile }) {
         ))}
         <RegistrationStatusBadge profile={profile} />
       </div>
-
-      <p className="text-sm text-muted-foreground">{summarise(profile)}</p>
     </header>
   );
 }
@@ -80,20 +77,6 @@ function RegistrationStatusBadge({ profile }: { profile: UserProfile }) {
       {config.label}
     </span>
   );
-}
-
-function summarise(p: UserProfile): string {
-  const parts: string[] = [`Living in ${p.residenceCity || COUNTRY_META[p.residenceCountry].name}`];
-
-  if (p.isStudent && p.studyCountry) {
-    parts.push(`studying in ${p.studyCity || COUNTRY_META[p.studyCountry].name}`);
-  }
-  if (p.isEmployed && p.workCountry) {
-    const hours = p.workHoursPerWeek ? ` (${p.workHoursPerWeek}h/week)` : "";
-    parts.push(`working in ${p.workCity || COUNTRY_META[p.workCountry].name}${hours}`);
-  }
-
-  return `${parts.join(", ")}.`;
 }
 
 export { CountryChip };

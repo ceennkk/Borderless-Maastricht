@@ -59,56 +59,55 @@
 }
 
 :root {
-  --radius: 0.625rem;
+  --radius: 1rem;
 
-  /* Cool neutral canvas, white cards: the data carries the colour. */
-  --background: oklch(0.982 0.003 250);
-  --foreground: oklch(0.21 0.015 255);
-  --surface: oklch(0.965 0.004 250);
+  /* Minimalist monochrome canvas */
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.13 0 0);
+  --surface: oklch(0.98 0 0);
 
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.21 0.015 255);
+  --card-foreground: oklch(0.13 0 0);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.21 0.015 255);
+  --popover-foreground: oklch(0.13 0 0);
 
-  /* One confident brand colour — Euregio green, brighter than before. */
-  --primary: oklch(0.46 0.085 170);
-  --primary-foreground: oklch(0.99 0 0);
+  /* Primary is now stark black */
+  --primary: oklch(0.13 0 0);
+  --primary-foreground: oklch(0.98 0 0);
   --sidebar: oklch(1 0 0);
-  --sidebar-foreground: oklch(0.21 0.015 255);
+  --sidebar-foreground: oklch(0.13 0 0);
 
-  --secondary: oklch(0.955 0.02 165);
-  --secondary-foreground: oklch(0.35 0.08 165);
+  --secondary: oklch(0.96 0 0);
+  --secondary-foreground: oklch(0.13 0 0);
 
-  --muted: oklch(0.955 0.004 250);
-  --muted-foreground: oklch(0.5 0.015 255);
+  --muted: oklch(0.96 0 0);
+  --muted-foreground: oklch(0.5 0 0);
 
-  --accent: oklch(0.93 0.035 165);
-  --accent-foreground: oklch(0.3 0.07 165);
+  --accent: oklch(0.96 0 0);
+  --accent-foreground: oklch(0.13 0 0);
 
-  /* Coral accent. Used for place and progress — never for status. */
-  --signal: oklch(0.7 0.18 36);
-  --signal-surface: oklch(0.96 0.03 40);
+  --signal: oklch(0.13 0 0);
+  --signal-surface: oklch(0.96 0 0);
 
-  --destructive: oklch(0.56 0.19 25);
-  --destructive-foreground: oklch(0.99 0 0);
+  --destructive: oklch(0.5 0 0);
+  --destructive-foreground: oklch(0.98 0 0);
 
-  --border: oklch(0.915 0.005 250);
-  --input: oklch(0.87 0.007 250);
-  --ring: oklch(0.55 0.11 165);
+  --border: oklch(0.92 0 0);
+  --input: oklch(0.92 0 0);
+  --ring: oklch(0.13 0 0);
 
-  --ok: oklch(0.6 0.13 155);
-  --ok-foreground: oklch(0.42 0.1 155);
-  --ok-surface: oklch(0.965 0.03 155);
+  /* Status colours mapped to minimal monochrome scale */
+  --ok: oklch(0.5 0 0);
+  --ok-foreground: oklch(0.4 0 0);
+  --ok-surface: oklch(0.98 0 0);
 
-  --check: oklch(0.75 0.14 75);
-  --check-foreground: oklch(0.47 0.11 60);
-  --check-surface: oklch(0.975 0.04 85);
+  --check: oklch(0.4 0 0);
+  --check-foreground: oklch(0.3 0 0);
+  --check-surface: oklch(0.96 0 0);
 
-  --action: oklch(0.55 0.19 22);
-  --action-foreground: oklch(0.45 0.17 22);
-  --action-surface: oklch(0.965 0.02 15);
-
+  --action: oklch(0.13 0 0);
+  --action-foreground: oklch(0.98 0 0);
+  --action-surface: oklch(0.92 0 0);
 }
 
 @layer base {

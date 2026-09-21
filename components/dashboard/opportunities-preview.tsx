@@ -14,10 +14,7 @@ export function OpportunitiesPreview({ opportunities }: { opportunities: Opportu
     <section className="space-y-4">
       <div className="flex items-end justify-between gap-4">
         <div className="space-y-1">
-          <h2 className="text-lg font-semibold tracking-tight">Opportunities for you</h2>
-          <p className="text-sm text-muted-foreground">
-            Not obligations — things you could benefit from.
-          </p>
+          <h2 className="text-lg font-semibold tracking-tight">Benefits & Tips</h2>
         </div>
         <Button asChild variant="ghost" size="sm">
           <Link href="/opportunities">
