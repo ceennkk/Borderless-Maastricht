@@ -31,7 +31,7 @@ export function OpportunityCard({ opportunity }: { opportunity: Opportunity }) {
       >
         <div className="min-w-0 flex-1 space-y-1">
           <div className="flex items-center gap-2 text-xs text-muted-foreground">
-            <span className="font-semibold uppercase tracking-wider">
+            <span className="font-semibold">
               {OPPORTUNITY_CATEGORY_META[opportunity.category].label}
             </span>
             {opportunity.countries?.map((c) => (

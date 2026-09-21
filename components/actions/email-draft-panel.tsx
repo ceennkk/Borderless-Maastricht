@@ -102,7 +102,7 @@ export function EmailDraftPanel({
           )}
 
           <div className="space-y-1.5">
-            <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+            <p className="text-xs font-semibold text-muted-foreground">
               Subject
             </p>
             <p className="rounded-lg border border-border bg-surface px-3 py-2 text-sm">
@@ -111,7 +111,7 @@ export function EmailDraftPanel({
           </div>
 
           <div className="space-y-1.5">
-            <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+            <p className="text-xs font-semibold text-muted-foreground">
               Message
             </p>
             <pre className="whitespace-pre-wrap rounded-lg border border-border bg-surface px-3 py-2 font-sans text-sm leading-relaxed">
@@ -171,7 +171,7 @@ function MissingFields({
       <div className="flex items-start gap-2">
         <TriangleAlert className="mt-0.5 size-3.5 shrink-0 text-check-foreground" aria-hidden />
         <div>
-          <p className="text-xs font-semibold uppercase tracking-wider text-check-foreground">
+          <p className="text-xs font-semibold text-check-foreground">
             Still to fill in
           </p>
           <p className="mt-0.5 text-xs text-check-foreground/80">

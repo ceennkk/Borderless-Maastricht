@@ -33,12 +33,8 @@ export function AppShell({ children }: { children: ReactNode }) {
   return (
     <div className="min-h-dvh md:flex">
       {/* Desktop sidebar */}
-      <aside className="sticky top-0 hidden h-dvh w-68 shrink-0 flex-col border-r border-border bg-card px-5 py-6 md:flex">
+      <aside className="sticky top-0 hidden h-dvh w-64 shrink-0 flex-col border-r border-border bg-card px-4 py-6 md:flex">
         <Logo href="/dashboard" className="px-2" />
-
-        <p className="mt-3 px-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-          Maastricht Euregio
-        </p>
 
         <div className="mt-8 flex-1">
           <MainNav />
@@ -47,7 +43,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         <div className="space-y-1 border-t border-border pt-4">
           <Button
             variant="ghost"
-            className="w-full justify-start gap-3 px-3 text-muted-foreground hover:bg-surface hover:text-foreground"
+            className="w-full justify-start gap-3 px-3 text-muted-foreground hover:bg-muted hover:text-foreground"
             onClick={() => setAskOpen(true)}
           >
             <Sparkles className="size-4" />
@@ -56,7 +52,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           <Button
             asChild
             variant="ghost"
-            className="w-full justify-start gap-3 px-3 text-muted-foreground hover:bg-surface hover:text-foreground"
+            className="w-full justify-start gap-3 px-3 text-muted-foreground hover:bg-muted hover:text-foreground"
           >
             <Link href="/profile">
               <User className="size-4" />

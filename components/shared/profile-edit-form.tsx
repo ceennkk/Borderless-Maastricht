@@ -16,7 +16,7 @@ import type { Country, RegistrationStatus, UserProfile } from "@/lib/types";
 
 function SectionHeading({ children }: { children: React.ReactNode }) {
   return (
-    <h3 className="border-b border-border pb-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+    <h3 className="border-b border-border pb-2 text-xs font-semibold text-muted-foreground">
       {children}
     </h3>
   );

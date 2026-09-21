@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 export function SituationCompare({ rows }: { rows: SituationRow[] }) {
   return (
     <div className="overflow-hidden border border-border bg-card">
-      <div className="grid grid-cols-[7rem_1fr_1fr] border-b border-border bg-surface px-4 py-2.5 text-xs font-semibold uppercase tracking-[0.08em] text-muted-foreground sm:grid-cols-[10rem_1fr_1fr] sm:px-5">
+      <div className="grid grid-cols-[7rem_1fr_1fr] border-b border-border bg-surface px-4 py-2.5 text-xs font-semibold text-muted-foreground sm:grid-cols-[10rem_1fr_1fr] sm:px-5">
         <span>Detail</span>
         <span>Current</span>
         <span>Proposed</span>

@@ -69,7 +69,7 @@ export function ScheduleStep({
       )}
     >
       {emphasis && (
-        <p className="border-b border-primary/25 bg-secondary/50 px-5 py-2 text-xs font-semibold uppercase tracking-wider text-primary">
+        <p className="border-b border-primary/25 bg-secondary/50 px-5 py-2 text-xs font-semibold text-primary">
           Do this next
         </p>
       )}

@@ -30,7 +30,7 @@ export function OpportunitiesPreview({ opportunities }: { opportunities: Opportu
       <div className="grid gap-8 border-t border-border sm:grid-cols-3">
         {shown.map((o) => (
           <Card key={o.id} className="flex h-full flex-col gap-2 rounded-none border-0 bg-transparent px-0 py-5">
-            <span className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+            <span className="text-xs font-medium text-muted-foreground">
               {OPPORTUNITY_CATEGORY_META[o.category].label}
             </span>
             <p className="font-medium leading-snug">{o.title}</p>

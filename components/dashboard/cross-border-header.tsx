@@ -14,26 +14,24 @@ export function CrossBorderHeader({ profile }: { profile: UserProfile }) {
   const countries = relevantCountries(profile);
 
   return (
-    <header className="space-y-5 border-b border-border pb-8">
-      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
-        Your cross-border life
-      </p>
+    <header className="space-y-3">
+      <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">
+        {profile.name ? `Hi ${profile.name}` : "Your cross-border life"}
+      </h1>
 
-      <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+      <div className="flex flex-wrap items-center gap-2">
         {countries.map((country, i) => (
-          <span key={country} className="flex items-center gap-4">
-            {i > 0 && <ArrowLeftRight className="size-5 text-border" aria-hidden />}
-            <span className="font-display text-4xl font-medium tracking-tight sm:text-5xl">
+          <span key={country} className="flex items-center gap-2">
+            {i > 0 && <ArrowLeftRight className="size-4 text-muted-foreground" aria-hidden />}
+            <span className="inline-flex items-center rounded-full border border-border bg-card px-3 py-1 text-sm font-medium">
               {COUNTRY_META[country].name}
             </span>
           </span>
         ))}
-      </div>
-
-      <div className="flex flex-col gap-3 text-sm sm:flex-row sm:items-center sm:gap-6">
-        <p className="text-muted-foreground">{summarise(profile)}</p>
         <RegistrationStatusBadge profile={profile} />
       </div>
+
+      <p className="text-sm text-muted-foreground">{summarise(profile)}</p>
     </header>
   );
 }
@@ -53,7 +51,7 @@ function RegistrationStatusBadge({ profile }: { profile: UserProfile }) {
     registered: {
       Icon: CheckCircle2,
       label: `Registered in ${city}`,
-      className: "border-transparent bg-secondary text-secondary-foreground",
+      className: "border-transparent bg-ok-surface text-ok-foreground",
     },
     not_registered: {
       Icon: CircleSlash,
@@ -63,7 +61,7 @@ function RegistrationStatusBadge({ profile }: { profile: UserProfile }) {
     in_progress: {
       Icon: Hourglass,
       label: `${REGISTRATION_STATUS_META.in_progress.short} in ${city}`,
-      className: "border-transparent bg-muted text-foreground",
+      className: "border-transparent bg-check-surface text-check-foreground",
     },
   }[status];
 
@@ -72,7 +70,7 @@ function RegistrationStatusBadge({ profile }: { profile: UserProfile }) {
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1.5 border-l-2 pl-2 text-xs font-medium",
+        "inline-flex w-fit items-center gap-1.5 rounded-full border px-3 py-1 text-sm font-medium",
         config.className,
       )}
     >

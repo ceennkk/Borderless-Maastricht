@@ -41,13 +41,13 @@ export default function LandingPage() {
         {/* Hero */}
         <section className="border-b border-border">
           <div className="mx-auto max-w-7xl px-6 py-12 lg:px-10 lg:py-16">
-            <div className="flex items-center gap-4 border-b border-border pb-4 text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
+            <div className="flex items-center gap-4 border-b border-border pb-4 text-xs font-semibold text-muted-foreground">
               <span>Maastricht Euregio</span>
               <span className="h-px flex-1 bg-border" />
               <span>Practical cross-border guidance</span>
             </div>
 
-            <h1 className="py-10 font-display text-5xl font-medium leading-[0.94] tracking-[-0.045em] sm:text-6xl lg:py-12 lg:text-[6rem]">
+            <h1 className="py-10 font-display text-5xl font-semibold leading-[1.02] tracking-[-0.035em] sm:text-6xl lg:py-12 lg:text-[6rem]">
               Your life crosses borders.
               <span className="block text-muted-foreground">Your next step stays clear.</span>
             </h1>
@@ -87,10 +87,10 @@ export default function LandingPage() {
         {/* How it works */}
         <section className="mx-auto max-w-7xl px-6 py-20 lg:px-10 lg:py-28">
           <div className="mb-12 grid gap-4 md:grid-cols-12">
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground md:col-span-3">
+            <p className="text-xs font-semibold text-muted-foreground md:col-span-3">
               How it works
             </p>
-            <h2 className="font-display text-4xl leading-tight tracking-tight md:col-span-7 md:text-5xl">
+            <h2 className="font-display text-3xl font-semibold leading-tight tracking-tight md:col-span-7 md:text-5xl">
               From a complicated situation to a useful answer.
             </h2>
           </div>
@@ -116,7 +116,7 @@ export default function LandingPage() {
         {/* Reassurance */}
         <section className="bg-sidebar text-sidebar-foreground">
           <div className="mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-20">
-            <p className="mb-10 text-xs font-semibold uppercase tracking-[0.16em] text-sidebar-foreground/55">
+            <p className="mb-10 text-xs font-semibold text-sidebar-foreground/55">
               Designed for trust
             </p>
             <div className="grid gap-10 md:grid-cols-3">
@@ -139,7 +139,7 @@ export default function LandingPage() {
 function Fact({ title, body }: { title: string; body: string }) {
   return (
     <div className="border-t border-sidebar-foreground/25 pt-5">
-      <h3 className="font-display text-2xl">{title}</h3>
+      <h3 className="font-display text-xl font-semibold">{title}</h3>
       <p className="mt-3 text-sm leading-relaxed text-sidebar-foreground/65">{body}</p>
     </div>
   );

@@ -61,7 +61,7 @@ export default function DashboardPage() {
 
 function DemoNotice() {
   return (
-    <div className="flex flex-wrap items-center gap-3 rounded-lg border border-dashed border-border bg-surface px-4 py-3 text-sm">
+    <div className="flex flex-wrap items-center gap-3 rounded-lg border border-secondary bg-secondary/60 px-4 py-2.5 text-sm">
       <span className="text-muted-foreground">
         You are looking at <strong className="font-medium text-foreground">Alex</strong>, our demo
         profile.

@@ -70,7 +70,7 @@ export function BookingPrepPanel({
         <div className="flex-1 space-y-5 overflow-y-auto px-5 py-5">
           {/* The single most useful thing: which service to pick. */}
           <section className="space-y-2">
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+            <h3 className="text-xs font-semibold text-muted-foreground">
               Select this service
             </h3>
             <div className="flex items-start justify-between gap-3 rounded-lg border border-primary/30 bg-secondary/40 px-3 py-2.5">
@@ -96,7 +96,7 @@ export function BookingPrepPanel({
           </section>
 
           <section className="space-y-2">
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+            <h3 className="text-xs font-semibold text-muted-foreground">
               Bring these
             </h3>
             <ul className="space-y-1.5">
@@ -113,7 +113,7 @@ export function BookingPrepPanel({
           </section>
 
           <section className="space-y-2">
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+            <h3 className="text-xs font-semibold text-muted-foreground">
               What the form asks — your answers
             </h3>
             <ul className="divide-y divide-border rounded-lg border border-border">

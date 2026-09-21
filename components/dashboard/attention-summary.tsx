@@ -12,11 +12,13 @@ export function AttentionSummary({ impacts }: { impacts: Impact[] }) {
 
   if (count === 0) {
     return (
-      <Card className="flex items-center gap-4 rounded-none border-x-0 border-ok/25 bg-ok-surface p-5">
-        <CheckCircle2 className="size-6 shrink-0 text-ok" aria-hidden />
+      <Card className="flex items-center gap-4 p-5">
+        <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-ok-surface">
+          <CheckCircle2 className="size-5 text-ok" aria-hidden />
+        </span>
         <div className="flex-1">
-          <p className="font-semibold text-ok-foreground">Nothing needs your attention</p>
-          <p className="text-sm text-ok-foreground/80">
+          <p className="font-semibold">Nothing needs your attention</p>
+          <p className="text-sm text-muted-foreground">
             Everything we can see about your situation is in order.
           </p>
         </div>
@@ -25,13 +27,15 @@ export function AttentionSummary({ impacts }: { impacts: Impact[] }) {
   }
 
   return (
-    <Card className="flex flex-col gap-4 rounded-none border-x-0 border-action/25 bg-action-surface p-5 sm:flex-row sm:items-center">
-      <TriangleAlert className="size-6 shrink-0 text-action" aria-hidden />
+    <Card className="flex flex-col gap-4 p-5 sm:flex-row sm:items-center">
+      <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-check-surface">
+        <TriangleAlert className="size-5 text-check-foreground" aria-hidden />
+      </span>
       <div className="flex-1">
-        <p className="font-semibold text-action-foreground">
+        <p className="font-semibold">
           {count} thing{count === 1 ? "" : "s"} need{count === 1 ? "s" : ""} your attention
         </p>
-        <p className="text-sm text-action-foreground/80">
+        <p className="text-sm text-muted-foreground">
           Start with the next practical step. The rest is waiting in your action centre.
         </p>
       </div>

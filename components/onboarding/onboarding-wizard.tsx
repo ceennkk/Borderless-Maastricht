@@ -80,7 +80,7 @@ export function OnboardingWizard({ resetNotice = false }: { resetNotice?: boolea
 
         <Card className="mt-6 rounded-none p-6 sm:p-8">
           <div className="space-y-1.5">
-            <h1 className="font-display text-3xl font-medium tracking-tight">{step.question}</h1>
+            <h1 className="text-2xl font-semibold tracking-tight">{step.question}</h1>
             {step.description && (
               <p className="text-sm leading-relaxed text-muted-foreground">{step.description}</p>
             )}

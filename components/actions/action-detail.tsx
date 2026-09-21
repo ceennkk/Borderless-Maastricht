@@ -81,7 +81,7 @@ export function ActionDetail({ action }: { action: Action }) {
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div className="space-y-2">
-      <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+      <h4 className="text-xs font-semibold text-muted-foreground">
         {title}
       </h4>
       {children}
