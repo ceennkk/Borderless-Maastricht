@@ -41,17 +41,14 @@ export function ActionCenter() {
   if (actions.length === 0) {
     return (
       <div className="space-y-8">
-        <PageHeader
-          title="Your actions"
-          description="The concrete steps that follow from your situation."
-        />
+        <PageHeader title="My To-Dos" />
         <EmptyState
           icon={<ListChecks className="size-8" />}
-          title="No actions right now"
-          description="Nothing in your current situation needs doing. Try the simulator to see what a change would add."
+          title="No to-dos right now"
+          description="You're all caught up."
           action={
             <Button asChild variant="outline">
-              <Link href="/simulator">Open the simulator</Link>
+              <Link href="/simulator">Plan a change</Link>
             </Button>
           }
         />
@@ -61,14 +58,7 @@ export function ActionCenter() {
 
   return (
     <div className="space-y-8">
-      <PageHeader
-        title="Your actions"
-        description={
-          schedule.plan
-            ? "Work down the list. Open a step to see why it matters and who to contact."
-            : "The concrete steps that follow from your situation. Open one to see why it matters and who to contact."
-        }
-      />
+      <PageHeader title="My To-Dos" />
 
       <div className="space-y-2">
         <div className="flex items-center justify-between text-sm">

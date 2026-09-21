@@ -42,13 +42,10 @@ export default function DashboardPage() {
         <Split className="size-6 shrink-0 text-primary" aria-hidden />
         <div className="flex-1">
           <p className="font-medium">Considering a change?</p>
-          <p className="text-sm text-muted-foreground">
-            See what a new job, a move or remote work would mean before you commit.
-          </p>
         </div>
         <Button asChild className="shrink-0">
           <Link href="/simulator">
-            Open the simulator
+            Plan a change
             <ArrowRight />
           </Link>
         </Button>

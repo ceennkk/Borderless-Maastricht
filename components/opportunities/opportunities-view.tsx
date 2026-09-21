@@ -23,21 +23,18 @@ export function OpportunitiesView() {
 
   return (
     <div className="space-y-6">
-      <PageHeader
-        title="Opportunities for you"
-        description="None of this is required. Things you could benefit from, not things you have to do."
-      />
+      <PageHeader title="Benefits & Tips" />
 
       <div className="flex flex-wrap items-center gap-x-2 gap-y-1 rounded-lg border border-border bg-muted/60 px-4 py-3 text-sm">
         <span className="text-muted-foreground">
-          Looking for what you <strong className="font-medium text-foreground">have</strong> to do?
+          Looking for required tasks?
         </span>
         {attention > 0 && (
-          <span className="text-muted-foreground">{attention} areas need attention.</span>
+          <span className="text-muted-foreground">({attention} areas need attention)</span>
         )}
         <Button asChild variant="link" size="sm" className="h-auto p-0">
           <Link href="/dashboard">
-            Dashboard
+            My Status
             <ArrowRight />
           </Link>
         </Button>

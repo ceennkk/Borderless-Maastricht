@@ -10,8 +10,8 @@ export interface NavItem {
 
 /** Primary navigation — the four places a user spends their time. */
 export const MAIN_NAV: NavItem[] = [
-  { href: "/dashboard", label: "Dashboard", shortLabel: "Home", icon: LayoutGrid },
-  { href: "/simulator", label: "What If?", shortLabel: "What If?", icon: Split },
-  { href: "/actions", label: "Actions", shortLabel: "Actions", icon: ListChecks },
-  { href: "/opportunities", label: "Opportunities", shortLabel: "Perks", icon: Compass },
+  { href: "/dashboard", label: "My Status", shortLabel: "Status", icon: LayoutGrid },
+  { href: "/simulator", label: "Plan a Change", shortLabel: "Plan Change", icon: Split },
+  { href: "/actions", label: "My To-Dos", shortLabel: "To-Dos", icon: ListChecks },
+  { href: "/opportunities", label: "Benefits", shortLabel: "Benefits", icon: Compass },
 ];

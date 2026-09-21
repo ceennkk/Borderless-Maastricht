@@ -140,8 +140,7 @@ export function SimulatorView() {
   return (
     <div className="space-y-8">
       <PageHeader
-        title="What if?"
-        description="Try a change before you make it. We compare your situation today with the one you are considering."
+        title="Plan a Change"
         action={
           submitted ? (
             <Button variant="outline" onClick={reset}>
@@ -226,7 +225,7 @@ export function SimulatorView() {
 
           <section className="space-y-4">
             <div className="space-y-1">
-              <h2 className="text-lg font-semibold tracking-tight">What this would affect</h2>
+              <h2 className="text-lg font-semibold tracking-tight">What this means for you</h2>
               <p className="text-sm text-muted-foreground">{result.summary}</p>
             </div>
             <ImpactResults impacts={result.impacts} />
@@ -235,18 +234,15 @@ export function SimulatorView() {
           <Card className="flex flex-col gap-4 bg-surface p-6 sm:flex-row sm:items-center">
             <ListChecks className="size-6 shrink-0 text-primary" aria-hidden />
             <div className="flex-1">
-              <p className="font-medium">Turn this into a plan</p>
-              <p className="text-sm text-muted-foreground">
-                Save this scenario and put its concrete steps in your action centre.
-              </p>
+              <p className="font-medium">Create Step-by-Step Plan</p>
             </div>
             <div className="flex flex-col gap-2 sm:flex-row">
               <Button variant="outline" onClick={saveCurrentSimulation} className="shrink-0">
                 {savedNotice || activeSimulationId ? <Check /> : <Save />}
-                {savedNotice || activeSimulationId ? "Saved" : "Save simulation"}
+                {savedNotice || activeSimulationId ? "Saved" : "Save plan"}
               </Button>
               <Button size="lg" onClick={addSimulationTodos} className="shrink-0">
-                Add to todos
+                Add to my To-Dos
                 <ArrowRight />
               </Button>
             </div>
