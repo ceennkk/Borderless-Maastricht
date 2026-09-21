@@ -2,7 +2,8 @@
 
 /** Editable view of the stored profile, with an option to redo onboarding. */
 import Link from "next/link";
-import { ClipboardList, RotateCcw } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { CheckCircle2, CircleSlash, ClipboardList, Hourglass, Pencil, RotateCcw } from "lucide-react";
 
 import { PageHeader } from "@/components/shared/page-header";
 import { PersonalDetailsForm } from "@/components/shared/personal-details-form";
@@ -12,7 +13,18 @@ import { Card } from "@/components/ui/card";
 import { useProfile } from "@/hooks/use-profile";
 
 export default function ProfilePage() {
-  const { isDemo, ready, reset } = useProfile();
+  const router = useRouter();
+  const { profile, isDemo, ready, reset } = useProfile();
+
+  function resetAllLocalData() {
+    const confirmed = window.confirm(
+      "Reset all Borderless data stored in this browser? Your profile, todos, saved simulations and personal details will be permanently deleted.",
+    );
+    if (!confirmed) return;
+
+    reset();
+    router.replace("/onboarding?reset=1");
+  }
 
   return (
     <div className="space-y-8">
@@ -42,7 +54,7 @@ export default function ProfilePage() {
       <PersonalDetailsForm />
 
       <div>
-        <Button variant="ghost" onClick={reset} className="text-muted-foreground">
+        <Button variant="ghost" onClick={resetAllLocalData} className="text-muted-foreground">
           <RotateCcw />
           Reset all local data
         </Button>
