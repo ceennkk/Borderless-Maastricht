@@ -21,7 +21,7 @@ import {
   buildScheduleInput,
   runTool,
 } from "@/lib/schedule-prompt";
-import { findAuthorityFor } from "@/lib/authorities";
+import { findAuthorityFor, getAuthority } from "@/lib/authorities";
 import type { Action, ScheduleJob, SchedulePlan, UserProfile } from "@/lib/types";
 
 export const runtime = "nodejs";
@@ -252,12 +252,17 @@ function normalisePlan(
     .map((item, i) => {
       const doBy = String(item.doBy ?? "");
       const action = byId.get(String(item.actionId ?? ""));
-      // Resolve the authority ourselves when the model left it out, so the
-      // booking preparation does not appear or vanish at random.
+      // Resolve the authority ourselves when the model left it out *or* gave
+      // something that is not an id — it sometimes returns the display name
+      // ("Finanzamt Aachen-Stadt") instead of the key. An unrecognised value is
+      // treated as missing, and reused as a name hint, so the booking
+      // preparation never silently disappears.
+      const claimed = (item.authorityId as string | null) ?? undefined;
+      const recognised = claimed && getAuthority(claimed) ? claimed : undefined;
       const authorityId =
-        ((item.authorityId as string | null) ?? undefined) ||
+        recognised ??
         findAuthorityFor({
-          authority: action?.authority,
+          authority: claimed ?? action?.authority,
           category: action?.category,
           country: profile.workCountry ?? profile.residenceCountry,
         })?.id;
