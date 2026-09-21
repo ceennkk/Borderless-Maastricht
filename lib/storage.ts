@@ -117,6 +117,12 @@ export function saveSimulation(simulation: SavedSimulation): SavedSimulation[] {
   return next;
 }
 
+export function deleteSimulation(id: string): SavedSimulation[] {
+  const next = loadSimulations().filter((item) => item.id !== id);
+  write(KEYS.simulations, next);
+  return next;
+}
+
 /* ---------------------------- personal details ---------------------------- */
 
 /** Identifying data used to fill message drafts. Never leaves the device. */

@@ -9,7 +9,7 @@
  */
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowRight, Check, ChevronDown, History, ListChecks, RotateCcw, Save } from "lucide-react";
+import { ArrowRight, Check, ChevronDown, History, ListChecks, RotateCcw, Save, Trash2 } from "lucide-react";
 
 import { ChangeForm } from "./change-form";
 import { ChangePicker } from "./change-picker";
@@ -26,6 +26,7 @@ import { toLifeChange } from "@/lib/documents";
 import { buildSituationRows, deriveActions, simulateChange } from "@/lib/rules";
 import {
   addActions,
+  deleteSimulation,
   loadSimulations,
   saveSimulation as persistSimulation,
 } from "@/lib/storage";
@@ -128,6 +129,14 @@ export function SimulatorView() {
     setAnalysis(null);
   }
 
+  function removeSimulation(id: string) {
+    setSimulations(deleteSimulation(id));
+    if (activeSimulationId === id) {
+      setActiveSimulationId(null);
+      setSavedNotice(false);
+    }
+  }
+
   return (
     <div className="space-y-8">
       <PageHeader
@@ -144,7 +153,11 @@ export function SimulatorView() {
       />
 
       {simulations.length > 0 && (
-        <SimulationHistory simulations={simulations} onOpen={openSavedSimulation} />
+        <SimulationHistory
+          simulations={simulations}
+          onOpen={openSavedSimulation}
+          onDelete={removeSimulation}
+        />
       )}
 
       {!submitted && analysis && (
@@ -247,9 +260,11 @@ export function SimulatorView() {
 function SimulationHistory({
   simulations,
   onOpen,
+  onDelete,
 }: {
   simulations: SavedSimulation[];
   onOpen: (simulation: SavedSimulation) => void;
+  onDelete: (id: string) => void;
 }) {
   return (
     <section className="space-y-3">
@@ -279,6 +294,20 @@ function SimulationHistory({
                     In todos
                   </span>
                 )}
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  className="shrink-0 text-muted-foreground hover:text-destructive"
+                  aria-label="Delete"
+                  title="Delete"
+                  onClick={(event) => {
+                    // Keep the click from toggling the <details> open.
+                    event.preventDefault();
+                    onDelete(simulation.id);
+                  }}
+                >
+                  <Trash2 />
+                </Button>
               </summary>
               <div className="space-y-4 border-t border-border px-4 py-4">
                 <p className="text-sm leading-relaxed text-muted-foreground">
