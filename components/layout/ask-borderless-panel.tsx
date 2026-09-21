@@ -16,6 +16,7 @@ import { getAI, type AiAnswer } from "@/lib/ai";
 import { LIMITS } from "@/lib/ai-prompt";
 import type { Impact, UserProfile } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { useProfile } from "@/hooks/use-profile";
 
 interface Message {
   role: "user" | "assistant";
@@ -39,6 +40,7 @@ export function AskBorderlessPanel({
   profile?: UserProfile | null;
   impacts?: Impact[];
 }) {
+  const { setProfile } = useProfile();
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [pending, setPending] = useState(false);
@@ -65,6 +67,11 @@ export function AskBorderlessPanel({
 
     setMessages((m) => [...m, { role: "assistant", text: answer.text }]);
     if (answer.suggestions?.length) setSuggestions(answer.suggestions);
+    if (answer.profileUpdate && profile) {
+      setProfile({ ...profile, ...answer.profileUpdate });
+      // Add a small message to the chat indicating the action
+      setMessages((m) => [...m, { role: "assistant", text: "*(I have automatically updated your profile settings to reflect this change!)*" }]);
+    }
     setNotice(
       answer.notice ??
         (answer.mocked

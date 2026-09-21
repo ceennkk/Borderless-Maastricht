@@ -30,6 +30,8 @@ export interface AiAnswer {
   mocked: boolean;
   /** Set when the model was reachable but failed — the UI can surface it. */
   notice?: string;
+  /** Optional profile fields to update based on AI tool calls. */
+  profileUpdate?: Partial<UserProfile>;
 }
 
 export interface BorderlessAI {

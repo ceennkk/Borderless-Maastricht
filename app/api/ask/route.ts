@@ -107,6 +107,25 @@ export async function POST(request: Request) {
         messages,
         temperature: 0.3,
         max_tokens: 600,
+        tools: [
+          {
+            type: "function",
+            function: {
+              name: "update_profile",
+              description: "Update the user's cross-border profile parameters (e.g. if they say they moved, got a new job, etc). Note: Only pass the fields that explicitly changed.",
+              parameters: {
+                type: "object",
+                properties: {
+                  residenceCountry: { type: "string", enum: ["NL", "DE", "BE"] },
+                  workCountry: { type: "string", enum: ["NL", "DE", "BE"] },
+                  isStudent: { type: "boolean" },
+                  isEmployed: { type: "boolean" },
+                  workHoursPerWeek: { type: "number" },
+                }
+              }
+            }
+          }
+        ]
       }),
       signal: controller.signal,
     });
@@ -120,11 +139,32 @@ export async function POST(request: Request) {
     }
 
     const data = (await response.json()) as {
-      choices?: Array<{ message?: { content?: string } }>;
+      choices?: Array<{ message?: { content?: string; tool_calls?: Array<{ function?: { name: string; arguments: string } }> } }>;
     };
-    const text = data.choices?.[0]?.message?.content?.trim();
+    
+    const message = data.choices?.[0]?.message;
+    const text = message?.content?.trim() || "";
+    const toolCalls = message?.tool_calls;
+    
+    let profileUpdate = null;
+    let finalText = text;
+    
+    if (toolCalls && toolCalls.length > 0) {
+      for (const call of toolCalls) {
+        if (call.function?.name === "update_profile") {
+          try {
+            profileUpdate = JSON.parse(call.function.arguments);
+            if (!finalText) {
+               finalText = "I have updated your profile with the new information!";
+            }
+          } catch (e) {
+            console.error("Failed to parse tool call arguments", e);
+          }
+        }
+      }
+    }
 
-    if (!text) {
+    if (!finalText && !profileUpdate) {
       return NextResponse.json(
         { error: "empty", message: "The model returned no answer." },
         { status: 502 },
@@ -132,15 +172,15 @@ export async function POST(request: Request) {
     }
 
     return NextResponse.json({
-      text,
+      text: finalText,
       suggestions: suggestFollowUps(body.impacts ?? []),
-      // Pass back which sources were used so the UI can display them
       sources: ragChunks.map((c) => ({
         name: c.source_name,
         url: c.url,
         country: c.country,
         lastChecked: c.last_crawled_at.slice(0, 10),
       })),
+      profileUpdate,
       mocked: false,
     });
   } catch (error) {
