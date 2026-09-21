@@ -15,22 +15,20 @@ import Link from "next/link";
 import { ListChecks } from "lucide-react";
 
 import { ActionList } from "./action-list";
+import { ProgressTrack } from "./progress-track";
 import { SchedulePlannerCard } from "./schedule-planner";
 import { ScheduleTimeline } from "./schedule-timeline";
 import { EmptyState } from "@/components/shared/empty-state";
 import { PageHeader } from "@/components/shared/page-header";
 import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
 import { useActions } from "@/hooks/use-actions";
 import { useProfile } from "@/hooks/use-profile";
 import { useSchedule } from "@/hooks/use-schedule";
 
 export function ActionCenter() {
   const { profile, impacts } = useProfile();
-  const { actions, open, done, toggle } = useActions(impacts);
+  const { actions, open, done, toggle, ready } = useActions(impacts);
   const schedule = useSchedule(profile, open);
-
-  const progress = actions.length === 0 ? 0 : (done.length / actions.length) * 100;
 
   // A step that is in the plan shows its own completed state inline, so it must
   // not also appear under "Completed" — that was the duplication this rework
@@ -60,23 +58,16 @@ export function ActionCenter() {
     <div className="space-y-8">
       <PageHeader title="My To-Dos" />
 
-      <div className="space-y-2">
-        <div className="flex items-center justify-between text-sm">
-          <span className="font-medium">
-            {done.length} of {actions.length} done
-          </span>
-          <span className="text-muted-foreground">{Math.round(progress)}%</span>
-        </div>
-        <Progress value={progress} />
-      </div>
-
       {schedule.plan ? (
-        <ScheduleTimeline
-          plan={schedule.plan}
-          actions={actions}
-          onToggle={toggle}
-          onReplan={schedule.run}
-        />
+        <>
+          <ProgressTrack actions={actions} done={done} ready={ready} />
+          <ScheduleTimeline
+            plan={schedule.plan}
+            actions={actions}
+            onToggle={toggle}
+            onReplan={schedule.run}
+          />
+        </>
       ) : (
         <>
           {open.length > 0 && (
@@ -90,6 +81,8 @@ export function ActionCenter() {
             />
           )}
 
+          <ProgressTrack actions={actions} done={done} ready={ready} />
+
           {open.length > 0 && (
             <section className="space-y-4">
               <h2 className="text-lg font-semibold tracking-tight">To do</h2>
@@ -101,7 +94,9 @@ export function ActionCenter() {
 
       {doneOutsidePlan.length > 0 && (
         <section className="space-y-4">
-          <h2 className="text-lg font-semibold tracking-tight text-muted-foreground">Completed</h2>
+          <h2 className="text-lg font-semibold tracking-tight text-muted-foreground">
+            Completed
+          </h2>
           <ActionList actions={doneOutsidePlan} onToggle={toggle} />
         </section>
       )}

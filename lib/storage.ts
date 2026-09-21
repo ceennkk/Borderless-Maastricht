@@ -13,6 +13,7 @@ import type { Action, SavedSimulation, UserProfile } from "./types";
 const KEYS = {
   profile: "borderless.profile",
   completedActions: "borderless.completedActions",
+  completedAt: "borderless.completedAt",
   actions: "borderless.actions",
   simulations: "borderless.simulations",
   dismissedOpportunities: "borderless.dismissedOpportunities",
@@ -78,6 +79,15 @@ export function loadCompletedActionIds(): string[] {
 
 export function saveCompletedActionIds(ids: string[]): void {
   write(KEYS.completedActions, Array.from(new Set(ids)));
+}
+
+/** When each action was ticked off, keyed by action id (ISO date). */
+export function loadCompletionDates(): Record<string, string> {
+  return read<Record<string, string>>(KEYS.completedAt) ?? {};
+}
+
+export function saveCompletionDates(dates: Record<string, string>): void {
+  write(KEYS.completedAt, dates);
 }
 
 /** Full action records are persisted as well as their completion state. */

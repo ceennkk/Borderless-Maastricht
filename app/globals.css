@@ -34,6 +34,10 @@
 
   /* Signal accent — the coral "border line" that marks Borderless. */
   --color-signal: var(--signal);
+  --color-progress-done: var(--progress-done);
+  --color-progress-open: var(--progress-open);
+  --color-progress-done-deep: var(--progress-done-deep);
+  --color-progress-open-strong: var(--progress-open-strong);
   --color-signal-surface: var(--signal-surface);
 
   /* Status colours — OK / CHECK / ACTION */
@@ -87,6 +91,12 @@
   --accent-foreground: oklch(0.13 0 0);
 
   --signal: oklch(0.13 0 0);
+
+  /* The to-do progress track keeps real colour: green done, red open. */
+  --progress-done: oklch(0.72 0.15 165);
+  --progress-done-deep: oklch(0.6 0.13 180);
+  --progress-open: oklch(0.9 0.05 15);
+  --progress-open-strong: oklch(0.66 0.17 15);
   --signal-surface: oklch(0.96 0 0);
 
   --destructive: oklch(0.5 0 0);
