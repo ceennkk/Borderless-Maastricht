@@ -23,6 +23,8 @@ export interface ProfileDraft {
   citizenship: string;
   euCitizen?: boolean;
   healthInsuranceCountry?: Country;
+  /** The user said outright that they do not know — distinct from not asked. */
+  healthInsuranceUnknown?: boolean;
 }
 
 export const EMPTY_DRAFT: ProfileDraft = {
@@ -51,6 +53,8 @@ export function draftToProfile(draft: ProfileDraft): UserProfile {
     remoteWorkDaysPerWeek: draft.isEmployed ? (draft.remoteWorkDaysPerWeek ?? 0) : undefined,
     citizenship: draft.citizenship.trim() || "Unspecified",
     euCitizen: draft.euCitizen ?? true,
-    healthInsuranceCountry: draft.healthInsuranceCountry,
+    healthInsuranceCountry: draft.healthInsuranceUnknown
+      ? undefined
+      : draft.healthInsuranceCountry,
   };
 }

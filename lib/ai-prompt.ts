@@ -81,9 +81,11 @@ export function buildContextBlock(profile?: UserProfile | null, impacts: Impact[
       lines.push("- Works: not employed");
     }
     lines.push(`- Citizenship: ${profile.citizenship} (${profile.euCitizen ? "EU/EEA" : "non-EU"})`);
-    if (profile.healthInsuranceCountry) {
-      lines.push(`- Health insurance in: ${COUNTRY_META[profile.healthInsuranceCountry].name}`);
-    }
+    lines.push(
+      profile.healthInsuranceCountry
+        ? `- Health insurance in: ${COUNTRY_META[profile.healthInsuranceCountry].name}`
+        : "- Health insurance: the user does not know which country insures them. Do not assume one.",
+    );
     lines.push("");
   }
 

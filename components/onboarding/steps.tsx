@@ -12,7 +12,14 @@ import { ChoiceGroup, CityField, CountryPicker } from "./fields";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { COUNTRIES, COUNTRY_META, REGISTRATION_STATUS_META } from "@/lib/constants";
-import type { RegistrationStatus } from "@/lib/types";
+import type { Country, RegistrationStatus } from "@/lib/types";
+
+/** What the thing is actually called in each country — the fastest way to be sure. */
+const HEALTH_INSURANCE_TERM: Record<string, string> = {
+  NL: "zorgverzekering",
+  DE: "Krankenkasse",
+  BE: "ziekenfonds / mutualité",
+};
 
 export interface StepProps {
   draft: ProfileDraft;
@@ -213,19 +220,40 @@ export const ONBOARDING_STEPS: OnboardingStep[] = [
   },
   {
     id: "insurance",
-    question: "Where are you insured?",
-    description: "Your current health insurance country — even if you suspect it should change.",
-    isComplete: (d) => Boolean(d.healthInsuranceCountry),
+    question: "Which country is your health insurance in?",
+    description:
+      "Health insurance only — the one that pays for a doctor or hospital. Not liability, car, contents or travel insurance.",
+    // "I don't know" is a real answer here. Forcing a guess would put a fact in
+    // the profile that nobody checked, and the rule engine would trust it.
+    isComplete: (d) => Boolean(d.healthInsuranceCountry) || d.healthInsuranceUnknown === true,
     Body: ({ draft, update }) => (
-      <ChoiceGroup
-        columns={3}
-        value={draft.healthInsuranceCountry}
-        onChange={(healthInsuranceCountry) => update({ healthInsuranceCountry })}
-        options={COUNTRIES.map((c) => ({
-          value: c,
-          label: `${COUNTRY_META[c].flag} ${COUNTRY_META[c].name}`,
-        }))}
-      />
+      <div className="space-y-4">
+        <ChoiceGroup
+          columns={2}
+          value={draft.healthInsuranceUnknown ? "UNKNOWN" : draft.healthInsuranceCountry}
+          onChange={(value) =>
+            value === "UNKNOWN"
+              ? update({ healthInsuranceUnknown: true, healthInsuranceCountry: undefined })
+              : update({ healthInsuranceUnknown: false, healthInsuranceCountry: value as Country })
+          }
+          options={[
+            ...COUNTRIES.map((c) => ({
+              value: c as string,
+              label: `${COUNTRY_META[c].flag} ${COUNTRY_META[c].name}`,
+              hint: HEALTH_INSURANCE_TERM[c],
+            })),
+            {
+              value: "UNKNOWN",
+              label: "I am not sure",
+              hint: "We will make finding out one of your tasks",
+            },
+          ]}
+        />
+        <p className="text-sm leading-relaxed text-muted-foreground">
+          Look for the card you show at a doctor&apos;s surgery, or the company that takes a monthly
+          premium from your account.
+        </p>
+      </div>
     ),
   },
 ];

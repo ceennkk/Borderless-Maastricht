@@ -155,6 +155,39 @@ function ruleHealthInsurance(p: UserProfile): Impact {
   const worksAbroad = p.isEmployed && p.workCountry && p.workCountry !== p.residenceCountry;
   const insuredWhereWorking = p.healthInsuranceCountry === p.workCountry;
 
+  // The user is allowed to say they do not know. Assuming a country here would
+  // put an unchecked fact into the profile and every rule downstream of it.
+  if (!p.healthInsuranceCountry) {
+    return impact({
+      id: "imp_health",
+      category: "HEALTH_INSURANCE",
+      status: worksAbroad ? "ACTION" : "CHECK",
+      title: "We do not know where you are insured",
+      explanation: worksAbroad
+        ? `You work in ${countryName(p.workCountry!)} and live in ${countryName(p.residenceCountry)}. Which country insures you decides what you pay and what you are covered for — and working across a border often changes it.`
+        : "Which country insures you decides what you pay and what you are covered for. Worth pinning down before anything else changes.",
+      actions: [
+        action({
+          id: "act_health_identify",
+          title: "Find out which country insures you",
+          description:
+            "Identify your health insurer and the country it sits in, so the rest of your situation can be worked out.",
+          category: "HEALTH_INSURANCE",
+          authority: "Your health insurer",
+          why: "Almost every other answer — what you pay, where you are treated, what happens when you start a job abroad — follows from which country insures you.",
+          steps: [
+            "Look for the card you show at a doctor's surgery, or the monthly premium on your bank statement.",
+            "Note the insurer's name and which country it operates in.",
+            "If you are employed, ask your employer which insurer they registered you with.",
+          ],
+          documents: ["Insurance card", "Bank statement showing the premium"],
+          source: SOURCES.zorgverzekering,
+        }),
+      ],
+      sources: [SOURCES.zorgverzekering, SOURCES.krankenkasse],
+    });
+  }
+
   if (worksAbroad && !insuredWhereWorking) {
     return impact({
       id: "imp_health",

@@ -7,9 +7,9 @@
  * from `simulateChange` in lib/rules.ts, so a real rule engine improves this
  * page without touching it.
  */
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowRight, ListChecks, RotateCcw } from "lucide-react";
+import { ArrowRight, Check, ChevronDown, History, ListChecks, RotateCcw, Save } from "lucide-react";
 
 import { ChangeForm } from "./change-form";
 import { ChangePicker } from "./change-picker";
@@ -23,22 +23,40 @@ import { Card } from "@/components/ui/card";
 import { useProfile } from "@/hooks/use-profile";
 import { LIFE_CHANGE_META } from "@/lib/constants";
 import { toLifeChange } from "@/lib/documents";
-import { buildSituationRows, simulateChange } from "@/lib/rules";
-import type { DocumentAnalysis, LifeChange, LifeChangeType } from "@/lib/types";
+import { buildSituationRows, deriveActions, simulateChange } from "@/lib/rules";
+import {
+  addActions,
+  loadSimulations,
+  saveSimulation as persistSimulation,
+} from "@/lib/storage";
+import type {
+  DocumentAnalysis,
+  LifeChange,
+  LifeChangeType,
+  SavedSimulation,
+  SimulationResult,
+} from "@/lib/types";
+import { createId, formatDate } from "@/lib/utils";
 
 export function SimulatorView() {
   const router = useRouter();
-  const { profile, setProfile } = useProfile();
+  const { profile } = useProfile();
 
   const [type, setType] = useState<LifeChangeType | undefined>();
   const [change, setChange] = useState<LifeChange | null>(null);
   const [submitted, setSubmitted] = useState<LifeChange | null>(null);
+  const [savedResult, setSavedResult] = useState<SimulationResult | null>(null);
+  const [activeSimulationId, setActiveSimulationId] = useState<string | null>(null);
+  const [simulations, setSimulations] = useState<SavedSimulation[]>([]);
+  const [savedNotice, setSavedNotice] = useState(false);
   /** A document waiting to be confirmed, before it becomes a LifeChange. */
   const [analysis, setAnalysis] = useState<DocumentAnalysis | null>(null);
 
+  useEffect(() => setSimulations(loadSimulations()), []);
+
   const result = useMemo(
-    () => (submitted ? simulateChange(profile, submitted) : null),
-    [profile, submitted],
+    () => savedResult ?? (submitted ? simulateChange(profile, submitted) : null),
+    [profile, savedResult, submitted],
   );
 
   const rows = useMemo(
@@ -50,6 +68,9 @@ export function SimulatorView() {
     setType(undefined);
     setChange(null);
     setSubmitted(null);
+    setSavedResult(null);
+    setActiveSimulationId(null);
+    setSavedNotice(false);
     setAnalysis(null);
   }
 
@@ -60,13 +81,51 @@ export function SimulatorView() {
     if (!documentChange) return;
     setAnalysis(null);
     setSubmitted(documentChange);
+    setSavedResult(null);
+    setActiveSimulationId(null);
   }
 
-  /** The end of the demo journey: adopt the proposed situation and get the tasks. */
-  function generateActionPlan() {
+  function saveCurrentSimulation(): SavedSimulation | null {
+    if (!result) return null;
+    const existing = activeSimulationId
+      ? simulations.find((simulation) => simulation.id === activeSimulationId)
+      : undefined;
+    const snapshot: SavedSimulation = existing ?? {
+      id: createId("simulation"),
+      createdAt: new Date().toISOString(),
+      result,
+      todoActionIds: [],
+    };
+    const next = persistSimulation(snapshot);
+    setSimulations(next);
+    setActiveSimulationId(snapshot.id);
+    setSavedNotice(true);
+    return snapshot;
+  }
+
+  /** Persist the simulation and copy its concrete actions into the action centre. */
+  function addSimulationTodos() {
     if (!result) return;
-    setProfile(result.proposedProfile);
+    const snapshot = saveCurrentSimulation();
+    if (!snapshot) return;
+    const todos = deriveActions(result.impacts).map((action) => ({
+      ...action,
+      completed: false,
+    }));
+    addActions(todos);
+    const updated = { ...snapshot, todoActionIds: todos.map((todo) => todo.id) };
+    setSimulations(persistSimulation(updated));
     router.push("/actions");
+  }
+
+  function openSavedSimulation(simulation: SavedSimulation) {
+    setType(simulation.result.change.type);
+    setChange(simulation.result.change);
+    setSubmitted(simulation.result.change);
+    setSavedResult(simulation.result);
+    setActiveSimulationId(simulation.id);
+    setSavedNotice(false);
+    setAnalysis(null);
   }
 
   return (
@@ -83,6 +142,10 @@ export function SimulatorView() {
           ) : undefined
         }
       />
+
+      {simulations.length > 0 && (
+        <SimulationHistory simulations={simulations} onOpen={openSavedSimulation} />
+      )}
 
       {!submitted && analysis && (
         <section className="space-y-4">
@@ -122,7 +185,16 @@ export function SimulatorView() {
               </h2>
               <ChangeForm type={type} profile={profile} onChange={setChange} />
               <div className="flex justify-end border-t border-border pt-5">
-                <Button size="lg" disabled={!change} onClick={() => setSubmitted(change)}>
+                <Button
+                  size="lg"
+                  disabled={!change}
+                  onClick={() => {
+                    setSubmitted(change);
+                    setSavedResult(null);
+                    setActiveSimulationId(null);
+                    setSavedNotice(false);
+                  }}
+                >
                   Simulate
                   <ArrowRight />
                 </Button>
@@ -152,16 +224,75 @@ export function SimulatorView() {
             <div className="flex-1">
               <p className="font-medium">Turn this into a plan</p>
               <p className="text-sm text-muted-foreground">
-                We will update your profile and put the concrete steps in your action centre.
+                Save this scenario and put its concrete steps in your action centre.
               </p>
             </div>
-            <Button size="lg" onClick={generateActionPlan} className="shrink-0">
-              Generate action plan
-              <ArrowRight />
-            </Button>
+            <div className="flex flex-col gap-2 sm:flex-row">
+              <Button variant="outline" onClick={saveCurrentSimulation} className="shrink-0">
+                {savedNotice || activeSimulationId ? <Check /> : <Save />}
+                {savedNotice || activeSimulationId ? "Saved" : "Save simulation"}
+              </Button>
+              <Button size="lg" onClick={addSimulationTodos} className="shrink-0">
+                Add to todos
+                <ArrowRight />
+              </Button>
+            </div>
           </Card>
         </div>
       )}
     </div>
+  );
+}
+
+function SimulationHistory({
+  simulations,
+  onOpen,
+}: {
+  simulations: SavedSimulation[];
+  onOpen: (simulation: SavedSimulation) => void;
+}) {
+  return (
+    <section className="space-y-3">
+      <div className="flex items-center gap-2">
+        <History className="size-5 text-muted-foreground" aria-hidden />
+        <h2 className="text-lg font-semibold tracking-tight">Saved simulations</h2>
+        <span className="rounded-full bg-secondary px-2 py-0.5 text-xs text-muted-foreground">
+          {simulations.length}
+        </span>
+      </div>
+      <div className="space-y-2">
+        {simulations.map((simulation) => {
+          const label = LIFE_CHANGE_META[simulation.result.change.type].label;
+          const actionCount = deriveActions(simulation.result.impacts).length;
+          return (
+            <details key={simulation.id} className="group rounded-xl border border-border bg-card">
+              <summary className="flex cursor-pointer list-none items-center gap-3 p-4">
+                <ChevronDown className="size-4 shrink-0 text-muted-foreground transition-transform group-open:rotate-180" />
+                <div className="min-w-0 flex-1">
+                  <p className="font-medium">{label}</p>
+                  <p className="text-xs text-muted-foreground">
+                    {formatDate(simulation.createdAt)} · {actionCount} todo{actionCount === 1 ? "" : "s"}
+                  </p>
+                </div>
+                {simulation.todoActionIds.length > 0 && (
+                  <span className="rounded-full bg-ok-surface px-2 py-1 text-xs font-medium text-ok-foreground">
+                    In todos
+                  </span>
+                )}
+              </summary>
+              <div className="space-y-4 border-t border-border px-4 py-4">
+                <p className="text-sm leading-relaxed text-muted-foreground">
+                  {simulation.result.summary}
+                </p>
+                <Button size="sm" variant="outline" onClick={() => onOpen(simulation)}>
+                  Open simulation
+                  <ArrowRight />
+                </Button>
+              </div>
+            </details>
+          );
+        })}
+      </div>
+    </section>
   );
 }

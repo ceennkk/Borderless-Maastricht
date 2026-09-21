@@ -10,14 +10,17 @@ import { ArrowRight, Split } from "lucide-react";
 import { AttentionSummary } from "@/components/dashboard/attention-summary";
 import { CrossBorderHeader } from "@/components/dashboard/cross-border-header";
 import { ImpactGrid } from "@/components/dashboard/impact-grid";
+import { TodoSummary } from "@/components/dashboard/todo-summary";
 import { OpportunitiesPreview } from "@/components/dashboard/opportunities-preview";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { useActions } from "@/hooks/use-actions";
 import { useProfile } from "@/hooks/use-profile";
 import { getOpportunities } from "@/lib/opportunities";
 
 export default function DashboardPage() {
   const { profile, impacts, isDemo, ready } = useProfile();
+  const { actions, open } = useActions(impacts);
   const opportunities = getOpportunities(profile);
 
   return (
@@ -27,6 +30,8 @@ export default function DashboardPage() {
       <CrossBorderHeader profile={profile} />
 
       <AttentionSummary impacts={impacts} />
+
+      <TodoSummary open={open} total={actions.length} />
 
       <section className="space-y-4">
         <h2 className="text-lg font-semibold tracking-tight">Your life areas</h2>
