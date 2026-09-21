@@ -20,7 +20,7 @@ import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { useProfile } from "@/hooks/use-profile";
 
-export function OnboardingWizard() {
+export function OnboardingWizard({ resetNotice = false }: { resetNotice?: boolean }) {
   const router = useRouter();
   const { setProfile } = useProfile();
   const [draft, setDraft] = useState<ProfileDraft>(EMPTY_DRAFT);
@@ -61,6 +61,13 @@ export function OnboardingWizard() {
       </header>
 
       <main className="mx-auto max-w-2xl px-6 pb-16">
+        {resetNotice && (
+          <div className="mb-6 flex items-start gap-2 rounded-lg border border-ok/25 bg-ok-surface px-4 py-3 text-sm text-ok-foreground">
+            <Check className="mt-0.5 size-4 shrink-0" aria-hidden />
+            <p>All local Borderless data was deleted. You can start with a new profile.</p>
+          </div>
+        )}
+
         <div className="space-y-2">
           <div className="flex items-center justify-between text-xs font-medium text-muted-foreground">
             <span>

@@ -146,6 +146,18 @@ export function saveDismissedOpportunityIds(ids: string[]): void {
 
 export function clearAll(): void {
   Object.values(KEYS).forEach(remove);
+
+  // Also remove obsolete Borderless keys left behind by older app versions.
+  // Never clear the whole origin: localhost may be shared with other projects.
+  if (typeof window === "undefined") return;
+  try {
+    const borderlessKeys = Array.from({ length: window.localStorage.length }, (_, index) =>
+      window.localStorage.key(index),
+    ).filter((key): key is string => key?.startsWith("borderless.") === true);
+    borderlessKeys.forEach(remove);
+  } catch {
+    /* private mode — the known keys above were still attempted */
+  }
 }
 
 export const STORAGE_KEYS = KEYS;

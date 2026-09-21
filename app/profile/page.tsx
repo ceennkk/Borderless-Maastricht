@@ -2,6 +2,7 @@
 
 /** Read-only view of the stored profile, with a way to redo onboarding. */
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { CheckCircle2, CircleSlash, Hourglass, Pencil, RotateCcw } from "lucide-react";
 
 import { CountryBadge } from "@/components/shared/country-badge";
@@ -14,7 +15,18 @@ import { REGISTRATION_STATUS_META } from "@/lib/constants";
 import type { UserProfile } from "@/lib/types";
 
 export default function ProfilePage() {
+  const router = useRouter();
   const { profile, isDemo, ready, reset } = useProfile();
+
+  function resetAllLocalData() {
+    const confirmed = window.confirm(
+      "Reset all Borderless data stored in this browser? Your profile, todos, saved simulations and personal details will be permanently deleted.",
+    );
+    if (!confirmed) return;
+
+    reset();
+    router.replace("/onboarding?reset=1");
+  }
 
   return (
     <div className="space-y-8">
@@ -85,7 +97,7 @@ export default function ProfilePage() {
       <PersonalDetailsForm />
 
       <div>
-        <Button variant="ghost" onClick={reset} className="text-muted-foreground">
+        <Button variant="ghost" onClick={resetAllLocalData} className="text-muted-foreground">
           <RotateCcw />
           Reset all local data
         </Button>
