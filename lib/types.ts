@@ -355,6 +355,15 @@ export interface SimulationResult {
   summary: string;
 }
 
+/** A simulation snapshot kept on this device so later simulations do not replace it. */
+export interface SavedSimulation {
+  id: string;
+  createdAt: string;
+  result: SimulationResult;
+  /** IDs of the persisted todos created from this snapshot. */
+  todoActionIds: string[];
+}
+
 /** A single row in the current/proposed comparison table. */
 export interface SituationRow {
   label: string;
