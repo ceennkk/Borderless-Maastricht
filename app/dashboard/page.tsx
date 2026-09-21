@@ -1,0 +1,69 @@
+"use client";
+
+/**
+ * Dashboard — the overview of the user's cross-border life.
+ * Thin by design: it composes dashboard components and reads from hooks.
+ */
+import Link from "next/link";
+import { ArrowRight, Split } from "lucide-react";
+
+import { AttentionSummary } from "@/components/dashboard/attention-summary";
+import { CrossBorderHeader } from "@/components/dashboard/cross-border-header";
+import { ImpactGrid } from "@/components/dashboard/impact-grid";
+import { OpportunitiesPreview } from "@/components/dashboard/opportunities-preview";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { useProfile } from "@/hooks/use-profile";
+import { getOpportunities } from "@/lib/opportunities";
+
+export default function DashboardPage() {
+  const { profile, impacts, isDemo, ready } = useProfile();
+  const opportunities = getOpportunities(profile);
+
+  return (
+    <div className="space-y-10">
+      {ready && isDemo && <DemoNotice />}
+
+      <CrossBorderHeader profile={profile} />
+
+      <AttentionSummary impacts={impacts} />
+
+      <section className="space-y-4">
+        <h2 className="text-lg font-semibold tracking-tight">Your life areas</h2>
+        <ImpactGrid impacts={impacts} />
+      </section>
+
+      <Card className="flex flex-col gap-4 bg-surface p-6 sm:flex-row sm:items-center">
+        <Split className="size-6 shrink-0 text-primary" aria-hidden />
+        <div className="flex-1">
+          <p className="font-medium">Considering a change?</p>
+          <p className="text-sm text-muted-foreground">
+            See what a new job, a move or remote work would mean before you commit.
+          </p>
+        </div>
+        <Button asChild className="shrink-0">
+          <Link href="/simulator">
+            Open the simulator
+            <ArrowRight />
+          </Link>
+        </Button>
+      </Card>
+
+      <OpportunitiesPreview opportunities={opportunities} />
+    </div>
+  );
+}
+
+function DemoNotice() {
+  return (
+    <div className="flex flex-wrap items-center gap-3 rounded-lg border border-dashed border-border bg-surface px-4 py-3 text-sm">
+      <span className="text-muted-foreground">
+        You are looking at <strong className="font-medium text-foreground">Alex</strong>, our demo
+        profile.
+      </span>
+      <Button asChild variant="link" size="sm" className="h-auto p-0">
+        <Link href="/onboarding">Create your own profile</Link>
+      </Button>
+    </div>
+  );
+}
