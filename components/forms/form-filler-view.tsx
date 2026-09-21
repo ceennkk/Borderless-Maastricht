@@ -92,9 +92,9 @@ I can securely pre-fill this PDF with your profile details and generate a downlo
                   <FileUp className="size-8 text-primary" aria-hidden />
                 </div>
                 <div className="space-y-2">
-                  <p className="text-lg font-semibold">Upload a blank PDF or Word form</p>
+                  <p className="text-lg font-semibold">Upload a blank PDF, Word form, or Photo</p>
                   <p className="mx-auto max-w-sm text-sm text-muted-foreground">
-                    Upload a complex government form. Borderless AI will read it, explain what to fill in, or auto-fill it for you.
+                    Upload a complex government form or take a picture of one. Borderless AI will read it, explain what to fill in, or auto-fill it for you.
                   </p>
                 </div>
                 <Button variant="secondary" className="mt-2 pointer-events-none">
