@@ -8,7 +8,7 @@
  * page without touching it.
  */
 import { useEffect, useMemo, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { ArrowRight, Check, ListChecks, RotateCcw, Save } from "lucide-react";
 
 import { ChangeForm } from "./change-form";
@@ -40,7 +40,6 @@ import { createId } from "@/lib/utils";
 
 export function SimulatorView() {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const { profile } = useProfile();
 
   const [type, setType] = useState<LifeChangeType | undefined>();
@@ -54,21 +53,8 @@ export function SimulatorView() {
   const [analysis, setAnalysis] = useState<DocumentAnalysis | null>(null);
 
   useEffect(() => {
-    const loaded = loadSimulations();
-    setSimulations(loaded);
-    
-    const id = searchParams.get("id");
-    if (id) {
-      const sim = loaded.find((s) => s.id === id);
-      if (sim) {
-        setType(sim.result.change.type);
-        setChange(sim.result.change);
-        setSubmitted(sim.result.change);
-        setSavedResult(sim.result);
-        setActiveSimulationId(sim.id);
-      }
-    }
-  }, [searchParams]);
+    setSimulations(loadSimulations());
+  }, []);
 
   const result = useMemo(
     () => savedResult ?? (submitted ? simulateChange(profile, submitted) : null),

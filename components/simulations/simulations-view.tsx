@@ -102,7 +102,7 @@ export function SimulationsView() {
                   {simulation.result.summary}
                 </p>
                 <Button asChild size="sm" variant="outline">
-                  <Link href={`/simulator?id=${simulation.id}`}>
+                  <Link href={`/simulations/${simulation.id}`}>
                     Open simulation
                     <ArrowRight />
                   </Link>
