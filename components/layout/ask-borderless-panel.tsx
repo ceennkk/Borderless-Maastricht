@@ -9,6 +9,7 @@
  */
 import { useEffect, useRef, useState } from "react";
 import { Info, Send, Sparkles, X } from "lucide-react";
+import ReactMarkdown from "react-markdown";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -127,13 +128,28 @@ export function AskBorderlessPanel({
             <div
               key={i}
               className={cn(
-                "max-w-[90%] rounded-xl px-4 py-2.5 text-sm leading-relaxed whitespace-pre-line",
+                "max-w-[90%] rounded-xl px-4 py-3 text-sm leading-relaxed",
                 m.role === "user"
-                  ? "ml-auto bg-primary text-primary-foreground"
+                  ? "ml-auto bg-primary text-primary-foreground whitespace-pre-line"
                   : "bg-secondary text-secondary-foreground",
               )}
             >
-              {m.text}
+              {m.role === "user" ? (
+                m.text
+              ) : (
+                <ReactMarkdown
+                  components={{
+                    a: ({ node: _, ...props }) => <a className="font-medium text-primary underline underline-offset-4 hover:text-primary/80" {...props} />,
+                    p: ({ node: _, ...props }) => <p className="mb-3 last:mb-0" {...props} />,
+                    ul: ({ node: _, ...props }) => <ul className="mb-3 list-inside list-disc space-y-1" {...props} />,
+                    ol: ({ node: _, ...props }) => <ol className="mb-3 list-inside list-decimal space-y-1" {...props} />,
+                    li: ({ node: _, ...props }) => <li className="" {...props} />,
+                    strong: ({ node: _, ...props }) => <strong className="font-semibold text-foreground" {...props} />
+                  }}
+                >
+                  {m.text}
+                </ReactMarkdown>
+              )}
             </div>
           ))}
 
