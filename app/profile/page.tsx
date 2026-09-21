@@ -2,13 +2,14 @@
 
 /** Read-only view of the stored profile, with a way to redo onboarding. */
 import Link from "next/link";
-import { Pencil, RotateCcw } from "lucide-react";
+import { CheckCircle2, CircleSlash, Hourglass, Pencil, RotateCcw } from "lucide-react";
 
 import { CountryBadge } from "@/components/shared/country-badge";
 import { PageHeader } from "@/components/shared/page-header";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useProfile } from "@/hooks/use-profile";
+import { REGISTRATION_STATUS_META } from "@/lib/constants";
 import type { UserProfile } from "@/lib/types";
 
 export default function ProfilePage() {
@@ -41,6 +42,7 @@ export default function ProfilePage() {
           label="Lives in"
           value={<CountryBadge country={profile.residenceCountry} city={profile.residenceCity} />}
         />
+        <Row label="Registered" value={<Registration profile={profile} />} />
         <Row
           label="Studies"
           value={
@@ -86,6 +88,21 @@ export default function ProfilePage() {
         </Button>
       </div>
     </div>
+  );
+}
+
+function Registration({ profile }: { profile: UserProfile }) {
+  const status = profile.registrationStatus;
+  if (!status) return <>Unknown</>;
+
+  const Icon =
+    status === "registered" ? CheckCircle2 : status === "in_progress" ? Hourglass : CircleSlash;
+
+  return (
+    <span className="inline-flex items-center gap-1.5">
+      <Icon className="size-4 text-muted-foreground" aria-hidden />
+      {REGISTRATION_STATUS_META[status].short}
+    </span>
   );
 }
 

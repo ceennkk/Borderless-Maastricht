@@ -11,7 +11,8 @@ import type { ProfileDraft } from "./draft";
 import { ChoiceGroup, CityField, CountryPicker } from "./fields";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { COUNTRIES, COUNTRY_META } from "@/lib/constants";
+import { COUNTRIES, COUNTRY_META, REGISTRATION_STATUS_META } from "@/lib/constants";
+import type { RegistrationStatus } from "@/lib/types";
 
 export interface StepProps {
   draft: ProfileDraft;
@@ -34,30 +35,47 @@ export const ONBOARDING_STEPS: OnboardingStep[] = [
     id: "residence",
     question: "Where do you live?",
     description: "The country you are officially registered in. Everything else follows from this.",
-    isComplete: (d) => Boolean(d.residenceCountry && d.residenceCity.trim()),
-    Body: ({ draft, update }) => (
-      <div className="space-y-6">
-        <div className="space-y-2">
-          <Label htmlFor="name">Your first name</Label>
-          <Input
-            id="name"
-            value={draft.name}
-            onChange={(e) => update({ name: e.target.value })}
-            placeholder="Alex"
+    isComplete: (d) =>
+      Boolean(d.residenceCountry && d.residenceCity.trim() && d.registrationStatus),
+    Body: ({ draft, update }) => {
+      const city = draft.residenceCity.trim();
+      return (
+        <div className="space-y-6">
+          <div className="space-y-2">
+            <Label htmlFor="name">Your first name</Label>
+            <Input
+              id="name"
+              value={draft.name}
+              onChange={(e) => update({ name: e.target.value })}
+              placeholder="Alex"
+            />
+          </div>
+          <CountryPicker
+            label="Country of residence"
+            value={draft.residenceCountry}
+            onChange={(residenceCountry) => update({ residenceCountry })}
           />
+          <CityField
+            value={draft.residenceCity}
+            country={draft.residenceCountry}
+            onChange={(residenceCity) => update({ residenceCity })}
+          />
+          {city && (
+            <ChoiceGroup<RegistrationStatus>
+              columns={3}
+              label={`Are you registered in ${city}?`}
+              value={draft.registrationStatus}
+              onChange={(registrationStatus) => update({ registrationStatus })}
+              options={[
+                { value: "registered", label: REGISTRATION_STATUS_META.registered.label },
+                { value: "not_registered", label: REGISTRATION_STATUS_META.not_registered.label },
+                { value: "in_progress", label: REGISTRATION_STATUS_META.in_progress.label },
+              ]}
+            />
+          )}
         </div>
-        <CountryPicker
-          label="Country of residence"
-          value={draft.residenceCountry}
-          onChange={(residenceCountry) => update({ residenceCountry })}
-        />
-        <CityField
-          value={draft.residenceCity}
-          country={draft.residenceCountry}
-          onChange={(residenceCity) => update({ residenceCity })}
-        />
-      </div>
-    ),
+      );
+    },
   },
   {
     id: "study",
