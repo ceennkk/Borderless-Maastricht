@@ -40,7 +40,7 @@ import { createId } from "@/lib/utils";
 
 export function SimulatorView() {
   const router = useRouter();
-  const { profile } = useProfile();
+  const { profile, setProfile } = useProfile();
 
   const [type, setType] = useState<LifeChangeType | undefined>();
   const [change, setChange] = useState<LifeChange | null>(null);
