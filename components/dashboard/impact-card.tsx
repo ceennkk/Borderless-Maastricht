@@ -20,6 +20,8 @@ className="flex h-full flex-col gap-4 p-5 transition-shadow hover:shadow-md"
         <StatusBadge status={impact.status} showIcon={false} />
       </div>
 
+      <span aria-hidden className="border-line-muted -mx-5 block h-px" />
+
       <div className="space-y-2">
         <p className="text-base font-semibold leading-snug">{impact.title}</p>
         <p className="text-sm leading-relaxed text-muted-foreground">{impact.explanation}</p>

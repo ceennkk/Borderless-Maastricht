@@ -32,6 +32,10 @@
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
 
+  /* Signal accent — the coral "border line" that marks Borderless. */
+  --color-signal: var(--signal);
+  --color-signal-surface: var(--signal-surface);
+
   /* Status colours — OK / CHECK / ACTION */
   --color-ok: var(--ok);
   --color-ok-foreground: var(--ok-foreground);
@@ -66,7 +70,7 @@
   --popover-foreground: oklch(0.21 0.015 255);
 
   /* One confident brand colour — Euregio green, brighter than before. */
-  --primary: oklch(0.47 0.1 165);
+  --primary: oklch(0.46 0.085 170);
   --primary-foreground: oklch(0.99 0 0);
   --sidebar: oklch(1 0 0);
   --sidebar-foreground: oklch(0.21 0.015 255);
@@ -79,6 +83,10 @@
 
   --accent: oklch(0.93 0.035 165);
   --accent-foreground: oklch(0.3 0.07 165);
+
+  /* Coral accent. Used for place and progress — never for status. */
+  --signal: oklch(0.7 0.18 36);
+  --signal-surface: oklch(0.96 0.03 40);
 
   --destructive: oklch(0.56 0.19 25);
   --destructive-foreground: oklch(0.99 0 0);
@@ -95,9 +103,9 @@
   --check-foreground: oklch(0.47 0.11 60);
   --check-surface: oklch(0.975 0.04 85);
 
-  --action: oklch(0.6 0.18 30);
-  --action-foreground: oklch(0.46 0.16 30);
-  --action-surface: oklch(0.965 0.025 30);
+  --action: oklch(0.55 0.19 22);
+  --action-foreground: oklch(0.45 0.17 22);
+  --action-surface: oklch(0.965 0.02 15);
 
 }
 
@@ -126,6 +134,20 @@
 }
 
 @layer utilities {
+  /* The signature: a dashed "border line", like a frontier drawn on a map. */
+  .border-line {
+    background-image: repeating-linear-gradient(to right, var(--signal) 0 6px, transparent 6px 11px);
+    background-size: 100% 2px;
+    background-repeat: no-repeat;
+    background-position: left center;
+  }
+  .border-line-muted {
+    background-image: repeating-linear-gradient(to right, var(--border) 0 6px, transparent 6px 11px);
+    background-size: 100% 1px;
+    background-repeat: no-repeat;
+    background-position: left center;
+  }
+
   /* A restrained survey grid, used only where geography is the subject. */
   .bg-grid {
     background-image:

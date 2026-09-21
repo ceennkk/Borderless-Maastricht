@@ -13,6 +13,7 @@ export function PageHeader({
   return (
     <div className="flex flex-col gap-4 border-b border-border pb-6 sm:flex-row sm:items-end sm:justify-between">
       <div className="space-y-1.5">
+        <span aria-hidden className="border-line mb-3 block h-2 w-12" />
         <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">
           {title}
         </h1>

@@ -21,9 +21,9 @@ export function MainNav() {
             href={item.href}
             aria-current={active ? "page" : undefined}
             className={cn(
-              "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors",
+              "relative flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors",
               active
-                ? "bg-secondary text-secondary-foreground [&_svg]:text-primary"
+                ? "bg-secondary text-secondary-foreground before:absolute before:inset-y-2 before:-left-4 before:w-[3px] before:rounded-r-full before:bg-signal [&_svg]:text-primary"
                 : "text-muted-foreground hover:bg-muted hover:text-foreground",
             )}
           >
@@ -56,7 +56,7 @@ export function MobileNav() {
               aria-current={active ? "page" : undefined}
               className={cn(
                 "flex flex-col items-center gap-1 py-2.5 text-[11px] font-medium",
-                active ? "text-primary" : "text-muted-foreground",
+                active ? "text-primary [&_svg]:text-signal" : "text-muted-foreground",
               )}
             >
               <Icon className="size-5" aria-hidden />
