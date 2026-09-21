@@ -23,9 +23,9 @@ import { Card } from "@/components/ui/card";
 import { useProfile } from "@/hooks/use-profile";
 import { LIFE_CHANGE_META } from "@/lib/constants";
 import { toLifeChange } from "@/lib/documents";
-import { buildSituationRows, deriveActions, simulateChange } from "@/lib/rules";
+import { buildSituationRows, simulateChange } from "@/lib/rules";
 import {
-  addActions,
+  deleteSimulation,
   loadSimulations,
   saveSimulation as persistSimulation,
 } from "@/lib/storage";
@@ -105,18 +105,14 @@ export function SimulatorView() {
     return snapshot;
   }
 
-  /** Persist the simulation and copy its concrete actions into the action centre. */
-  function addSimulationTodos() {
+  function makeReality() {
     if (!result) return;
-    const snapshot = saveCurrentSimulation();
-    if (!snapshot) return;
-    const todos = deriveActions(result.impacts).map((action) => ({
-      ...action,
-      completed: false,
-    }));
-    addActions(todos);
-    const updated = { ...snapshot, todoActionIds: todos.map((todo) => todo.id) };
-    setSimulations(persistSimulation(updated));
+    setProfile(result.proposedProfile);
+    
+    // If it was already a saved simulation, clean it up
+    if (activeSimulationId) {
+      deleteSimulation(activeSimulationId);
+    }
     router.push("/actions");
   }
 
@@ -215,8 +211,8 @@ export function SimulatorView() {
                 {savedNotice || activeSimulationId ? <Check /> : <Save />}
                 {savedNotice || activeSimulationId ? "Saved" : "Save plan"}
               </Button>
-              <Button size="lg" onClick={addSimulationTodos} className="shrink-0">
-                Add to my To-Dos
+              <Button size="lg" onClick={makeReality} className="shrink-0">
+                Make this my current situation
                 <ArrowRight />
               </Button>
             </div>
