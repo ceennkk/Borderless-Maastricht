@@ -5,12 +5,13 @@
  * user answers — so the wizard never has to fake values mid-flow.
  */
 import { createId } from "@/lib/utils";
-import type { Country, UserProfile } from "@/lib/types";
+import type { Country, RegistrationStatus, UserProfile } from "@/lib/types";
 
 export interface ProfileDraft {
   name: string;
   residenceCountry?: Country;
   residenceCity: string;
+  registrationStatus?: RegistrationStatus;
   isStudent?: boolean;
   studyCountry?: Country;
   studyCity: string;
@@ -39,6 +40,7 @@ export function draftToProfile(draft: ProfileDraft): UserProfile {
     name: draft.name.trim() || "You",
     residenceCountry: draft.residenceCountry ?? "NL",
     residenceCity: draft.residenceCity.trim(),
+    registrationStatus: draft.registrationStatus,
     isStudent: draft.isStudent ?? false,
     studyCountry: draft.isStudent ? draft.studyCountry : undefined,
     studyCity: draft.isStudent ? draft.studyCity.trim() : undefined,
