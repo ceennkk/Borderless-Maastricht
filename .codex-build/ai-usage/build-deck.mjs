@@ -6,7 +6,7 @@ import { Presentation, PresentationFile } from "@oai/artifact-tool";
 const workspaceDir = "/Users/cenk/Desktop/Development/Borderless-Maastricht";
 const skillDir = "/Users/cenk/.codex/plugins/cache/openai-primary-runtime/presentations/26.909.22227/skills/presentations";
 const tmpDir = path.join(workspaceDir, ".codex-build/ai-usage");
-const finalPath = path.join(workspaceDir, "output/borderless-ai-usage-hackathon-v2.pptx");
+const finalPath = path.join(workspaceDir, "output/borderless-ai-usage-hackathon-short.pptx");
 const runtimePython = "/Users/cenk/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3";
 
 const { resolvePresentationFont, finalizePresentation } = await import(
@@ -75,15 +75,15 @@ function footer(slide, page) {
   const slide = deck.slides.add();
   slide.background.fill = C.paper;
   text(slide, "AI IN BORDERLESS", 56, 42, 300, 24, { size: 13, bold: true, color: C.green });
-  text(slide, "A personal guide that can update the plan", 56, 84, 910, 62, { size: 40, bold: true, color: C.ink });
-  text(slide, "The assistant receives the current situation, answers in context and proposes profile changes only with user confirmation.", 56, 160, 890, 52, { size: 20, color: C.muted });
+  text(slide, "A personal AI guide", 56, 84, 910, 62, { size: 40, bold: true, color: C.ink });
+  text(slide, "Personal context. User control.", 56, 160, 890, 40, { size: 20, color: C.muted });
 
   const stages = [
-    ["User asks", "“I now work three days from home.”"],
-    ["Relevant context", "Profile, open To-Dos and flagged impacts travel with the question."],
-    ["Secure AI route", "The browser calls our backend. The OpenAI key stays on the server."],
-    ["Guided answer", "A strict system prompt avoids invented figures and legal advice."],
-    ["Confirmed update", "The AI can propose update_profile. The user approves before the dashboard changes."],
+    ["Question", "The user asks."],
+    ["Context", "Profile + open tasks."],
+    ["Secure API", "Key stays on server."],
+    ["Guidance", "No invented figures."],
+    ["Confirmation", "User approves updates."],
   ];
   const xs = [56, 286, 516, 746, 976];
   stages.forEach(([head, body], i) => {
@@ -93,8 +93,8 @@ function footer(slide, page) {
     if (i < stages.length - 1) connector(slide, xs[i] + 167, 303, xs[i + 1] - 16, 303, C.line, 2);
   });
   box(slide, 56, 532, 1168, 94, C.mint);
-  text(slide, "Safety by design", 82, 551, 220, 24, { size: 16, bold: true, color: C.green });
-  text(slide, "No API key in the browser. No silent profile edits. The assistant acts as a guide, with the user in control.", 82, 579, 1062, 28, { size: 18, color: C.ink });
+  text(slide, "Safety", 82, 551, 220, 24, { size: 16, bold: true, color: C.green });
+  text(slide, "The user stays in control.", 82, 579, 1062, 28, { size: 20, color: C.ink });
   slide.speakerNotes.textFrame.setText("Source: User-provided Borderless chatbot architecture.\nKey message: personal context improves relevance; confirmation keeps profile updates under user control.");
   footer(slide, 1);
 }
@@ -104,14 +104,14 @@ function footer(slide, page) {
   const slide = deck.slides.add();
   slide.background.fill = C.white;
   text(slide, "RETRIEVAL-AUGMENTED GENERATION", 56, 42, 450, 24, { size: 13, bold: true, color: C.green });
-  text(slide, "Answers grounded in official sources", 56, 84, 870, 62, { size: 40, bold: true, color: C.ink });
-  text(slide, "Before the model answers, Borderless retrieves relevant government guidance and passes it into the prompt as context.", 56, 160, 900, 52, { size: 20, color: C.muted });
+  text(slide, "Official-source answers", 56, 84, 870, 62, { size: 40, bold: true, color: C.ink });
+  text(slide, "RAG retrieves relevant government guidance before every response.", 56, 160, 900, 40, { size: 20, color: C.muted });
 
   const stages = [
-    ["Official documents", "Belastingdienst, SVB and GrenzInfoPunkt documents are stored as searchable vectors."],
-    ["Profile-aware search", "A person working in Germany receives German-relevant material, not unrelated Belgian tax rules."],
-    ["Context injection", "The most relevant legal passages enter the model prompt as ground truth."],
-    ["Traceable answer", "The assistant answers from that context and the chat shows the exact source URLs."],
+    ["Official documents", "Belastingdienst, SVB, GrenzInfoPunkt."],
+    ["Filtered search", "By profile and country."],
+    ["Prompt context", "Relevant passages only."],
+    ["Source links", "Each answer is traceable."],
   ];
   const y = 270;
   const xs = [56, 348, 640, 932];
@@ -123,7 +123,7 @@ function footer(slide, page) {
     if (i < stages.length - 1) connector(slide, xs[i] + 236, y + 113, xs[i + 1], y + 113, C.line, 2);
   });
   text(slide, "Why it matters", 56, 552, 180, 24, { size: 16, bold: true, color: C.green });
-  text(slide, "The model does not rely on general legal knowledge alone. It works from current, official guidance that users can open and check.", 56, 583, 1070, 28, { size: 18, color: C.ink });
+  text(slide, "Official guidance, shown with the answer.", 56, 583, 1070, 28, { size: 20, color: C.ink });
   slide.speakerNotes.textFrame.setText("Source: User-provided Borderless RAG architecture.\nKey message: retrieval narrows the answer to official, relevant guidance and exposes its sources.");
   footer(slide, 2);
 }
@@ -145,5 +145,5 @@ await finalizePresentation({
   layoutArgs: ["--expected-slide-size-emu", "12192000,6858000", "--validate-bullet-geometry", "--validate-heading-fit"],
   fontPolicy: { basis: "design", families: [font] },
   verifyArtifactToolImport: true,
-  receiptPath: path.join(workspaceDir, ".codex-finalizer/borderless-ai-usage-v2.validation.json"),
+  receiptPath: path.join(workspaceDir, ".codex-finalizer/borderless-ai-usage-short.validation.json"),
 });

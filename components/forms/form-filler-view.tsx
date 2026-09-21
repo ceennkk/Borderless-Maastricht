@@ -10,13 +10,25 @@ import { Card } from "@/components/ui/card";
 import { useProfile } from "@/hooks/use-profile";
 import { cn } from "@/lib/utils";
 
+type FormAnalysisResult = {
+  filename: string;
+  formName: string;
+  summary: string;
+  fields: Array<{
+    id: string;
+    name: string;
+    action: string;
+    reason: string;
+  }>;
+};
+
 export function FormFillerView() {
   const { profile } = useProfile();
   const inputRef = useRef<HTMLInputElement>(null);
   
   const [dragging, setDragging] = useState(false);
   const [pending, setPending] = useState(false);
-  const [result, setResult] = useState<string | null>(null);
+  const [result, setResult] = useState<FormAnalysisResult | null>(null);
 
   function handleFile(file?: File | null) {
     if (!file || pending) return;
@@ -30,20 +42,31 @@ export function FormFillerView() {
     }, 2500);
   }
 
-  function generateMockExplanation(filename: string) {
-    return `### I've analysed "${filename}"
+  function generateMockExplanation(filename: string): FormAnalysisResult {
+    return {
+      filename,
+      formName: "German Tax Registration (Fragebogen zur steuerlichen Erfassung)",
+      summary: "Since you live in the Netherlands and work in Germany, here is exactly how you should fill out this form based on your profile:",
+      fields: [
+        { id: "1.1", name: "Steuernummer", action: "Leave this blank", reason: "The Finanzamt will assign you one." },
+        { id: "1.4", name: "Wohnsitz", action: "Enter your Dutch address", reason: "Do not use your employer's address." },
+        { id: "2.3", name: "Ansässigkeitsstaat", action: "Select 'Niederlande'", reason: "This is critical for the double taxation treaty." },
+        { id: "3.1", name: "Einkunftsart", action: "Select 'Einkünfte aus nichtselbständiger Arbeit'", reason: "Because your income is from employment." },
+      ]
+    };
+  }
 
-This looks like the **German Tax Registration Form (Fragebogen zur steuerlichen Erfassung)**. Since you live in the Netherlands and work in Germany, here is exactly how you should fill it out:
-
-- **Field 1.1 (Steuernummer):** Leave this blank. The Finanzamt will assign you one.
-- **Field 1.4 (Wohnsitz):** Enter your Dutch address. Do not use your employer's address.
-- **Field 2.3 (Ansässigkeitsstaat):** Select "Niederlande" (Netherlands). This is critical for the double taxation treaty.
-- **Field 3.1 (Einkunftsart):** Select "Einkünfte aus nichtselbständiger Arbeit" (Income from employment).
-
-**Auto-Fill Ready:**
-I can securely pre-fill this PDF with your profile details and generate a download link.
-
-*(Note: This is a hackathon demo. In a real environment, we use OCR and PDF-lib to return a pre-filled PDF file right here!)*`;
+  function handleDownload() {
+    const content = "This is a hackathon demo file.\\n\\nIn a real environment, this would be your original PDF file, with all the correct fields automatically pre-filled using OCR and PDF-lib based on your Borderless profile!";
+    const blob = new Blob([content], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "pre-filled-form.txt";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
   }
 
   return (
@@ -127,22 +150,46 @@ I can securely pre-fill this PDF with your profile details and generate a downlo
             <Wand2 className="size-5 text-primary" />
             <h2 className="font-semibold text-primary">Form Analysis Complete</h2>
           </div>
-          <div className="px-6 py-6 prose prose-sm max-w-none text-foreground prose-p:leading-relaxed prose-li:my-1">
-            <ReactMarkdown
-              components={{
-                strong: ({ node: _, ...props }) => <strong className="font-semibold text-foreground" {...props} />
-              }}
-            >
-              {result}
-            </ReactMarkdown>
+          
+          <div className="p-6 space-y-6">
+            <div className="space-y-2">
+              <h3 className="text-xl font-semibold tracking-tight">{result.formName}</h3>
+              <p className="text-muted-foreground">{result.summary}</p>
+            </div>
+
+            <div className="grid gap-3">
+              {result.fields.map((field) => (
+                <div key={field.id} className="rounded-lg border border-border p-4 bg-surface/50 flex flex-col sm:flex-row sm:items-center gap-4">
+                  <div className="flex-1 space-y-1">
+                    <div className="flex items-center gap-2">
+                      <span className="inline-flex h-6 items-center rounded bg-primary/10 px-2 text-xs font-semibold text-primary">
+                        Field {field.id}
+                      </span>
+                      <span className="font-medium">{field.name}</span>
+                    </div>
+                    <p className="text-sm text-muted-foreground ml-1">{field.reason}</p>
+                  </div>
+                  <div className="sm:text-right shrink-0">
+                    <p className="text-sm font-semibold text-foreground bg-background border border-border px-3 py-1.5 rounded-md shadow-sm">
+                      {field.action}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            
+            <div className="rounded-lg bg-secondary/50 p-4 text-sm text-muted-foreground">
+              <p><strong>Auto-Fill Ready:</strong> I can securely pre-fill this PDF with your profile details and generate a download link.</p>
+            </div>
           </div>
+
           <div className="bg-surface/50 px-6 py-4 border-t border-border flex justify-end gap-3">
-            <Button variant="outline">
-              Save Instructions
+            <Button variant="outline" onClick={() => setResult(null)}>
+              Start Over
             </Button>
-            <Button className="gap-2">
+            <Button className="gap-2" onClick={handleDownload}>
               <CheckCircle2 className="size-4" />
-              Download Pre-filled PDF
+              Download Pre-filled Form
             </Button>
           </div>
         </Card>

@@ -1,71 +1,71 @@
-{"kind":"deck","id":"pr/aa6s2x","name":"Deck"}
-{"kind":"layout","layoutId":"0ae6dd54-1e3e-4ba2-8537-89530d9b7109","name":"Master","type":"master"}
-{"kind":"layout","layoutId":"bf0e2398-ae80-40aa-9661-515b84b2e980","name":"Title Slide","type":"title"}
-{"kind":"slide","id":"sl/yur45v","slide":1,"title":"AI IN BORDERLESS","textShapes":22}
-{"kind":"textbox","id":"sh/76h83uts","slide":1,"text":"AI IN BORDERLESS","textPreview":"AI IN BORDERLESS","textChars":16,"textLines":1,"bbox":[56,42,300,24]}
-{"kind":"textbox","id":"sh/s7a9wzax","slide":1,"text":"A personal guide that can update the plan","textPreview":"A personal guide that can update the plan","textChars":41,"textLines":1,"bbox":[56,84,910,62]}
-{"kind":"textbox","id":"sh/t8jq54bi","slide":1,"text":"The assistant receives the current situation, answers in context and proposes profile changes only with user confirmation.","textPreview":"The assistant receives the current situation, answers in context and proposes profile changes only with user confirmation.","textChars":122,"textLines":1,"bbox":[56,160,890,52]}
-{"kind":"shape","id":"sh/u9sry9s3","slide":1,"bbox":[56,286,34,34]}
-{"kind":"textbox","id":"sh/fa187eto","slide":1,"text":"1","textPreview":"1","textChars":1,"textLines":1,"bbox":[56,287,34,32]}
-{"kind":"textbox","id":"sh/gba90ja9","slide":1,"text":"User asks","textPreview":"User asks","textChars":9,"textLines":1,"bbox":[56,334,205,34]}
-{"kind":"textbox","id":"sh/hcjq94bu","slide":1,"text":"“I now work three days from home.”","textPreview":"“I now work three days from home.”","textChars":34,"textLines":1,"bbox":[56,374,205,106]}
-{"kind":"shape","id":"sh/2dsr29sf","slide":1,"bbox":[223,303,47,0]}
-{"kind":"shape","id":"sh/3e18bet0","slide":1,"bbox":[286,286,34,34]}
-{"kind":"textbox","id":"sh/r2xcvelo","slide":1,"text":"2","textPreview":"2","textChars":1,"textLines":1,"bbox":[286,287,34,32]}
-{"kind":"textbox","id":"sh/61obm943","slide":1,"text":"Relevant context","textPreview":"Relevant context","textChars":16,"textLines":1,"bbox":[286,334,205,34]}
-{"kind":"textbox","id":"sh/t4zux43u","slide":1,"text":"Profile, open To-Dos and flagged impacts travel with the question.","textPreview":"Profile, open To-Dos and flagged impacts travel with the question.","textChars":66,"textLines":1,"bbox":[286,374,205,106]}
-{"kind":"shape","id":"sh/s36tojm9","slide":1,"bbox":[453,303,47,0]}
-{"kind":"shape","id":"sh/jyxcrulc","slide":1,"bbox":[516,286,34,34]}
-{"kind":"textbox","id":"sh/ixobip47","slide":1,"text":"3","textPreview":"3","textChars":1,"textLines":1,"bbox":[516,287,34,32]}
-{"kind":"textbox","id":"sh/50fut43i","slide":1,"text":"Secure AI route","textPreview":"Secure AI route","textChars":15,"textLines":1,"bbox":[516,334,205,34]}
-{"kind":"textbox","id":"sh/4z6tkzmx","slide":1,"text":"The browser calls our backend. The OpenAI key stays on the server.","textPreview":"The browser calls our backend. The OpenAI key stays on the server.","textChars":66,"textLines":1,"bbox":[516,374,205,106]}
-{"kind":"shape","id":"sh/nuhc3ylw","slide":1,"bbox":[683,303,47,0]}
-{"kind":"shape","id":"sh/2t8butkb","slide":1,"bbox":[746,286,34,34]}
-{"kind":"textbox","id":"sh/ypcfmx4j","slide":1,"text":"4","textPreview":"4","textChars":1,"textLines":1,"bbox":[746,287,34,32]}
-{"kind":"textbox","id":"sh/zqlwv254","slide":1,"text":"Guided answer","textPreview":"Guided answer","textChars":13,"textLines":1,"bbox":[746,334,205,34]}
-{"kind":"textbox","id":"sh/kruxonmp","slide":1,"text":"A strict system prompt avoids invented figures and legal advice.","textPreview":"A strict system prompt avoids invented figures and legal advice.","textChars":64,"textLines":1,"bbox":[746,374,205,106]}
-{"kind":"shape","id":"sh/ls3exsna","slide":1,"bbox":[913,303,47,0]}
-{"kind":"shape","id":"sh/mtcfqx4f","slide":1,"bbox":[976,286,34,34]}
-{"kind":"textbox","id":"sh/7ulwz250","slide":1,"text":"5","textPreview":"5","textChars":1,"textLines":1,"bbox":[976,287,34,32]}
-{"kind":"textbox","id":"sh/8vexs7ml","slide":1,"text":"Confirmed update","textPreview":"Confirmed update","textChars":16,"textLines":1,"bbox":[976,334,205,34]}
-{"kind":"textbox","id":"sh/9wne1cn6","slide":1,"text":"The AI can propose update_profile. The user approves before the dashboard changes.","textPreview":"The AI can propose update_profile. The user approves before the dashboard changes.","textChars":82,"textLines":1,"bbox":[976,374,205,106]}
-{"kind":"shape","id":"sh/2xsvedob","slide":1,"bbox":[56,532,1168,94]}
-{"kind":"textbox","id":"sh/ny1wni5w","slide":1,"text":"Safety by design","textPreview":"Safety by design","textChars":16,"textLines":1,"bbox":[82,551,220,24]}
-{"kind":"textbox","id":"sh/5s7itg7e","slide":1,"text":"No API key in the browser. No silent profile edits. The assistant acts as a guide, with the user in control.","textPreview":"No API key in the browser. No silent profile edits. The assistant acts as a guide, with the user in control.","textChars":108,"textLines":1,"bbox":[82,579,1062,28]}
-{"kind":"shape","id":"sh/4ryhkb6t","slide":1,"bbox":[56,672,1168,0]}
-{"kind":"textbox","id":"sh/jqp0r6p8","slide":1,"text":"BORDERLESS  /  AI USAGE","textPreview":"BORDERLESS  /  AI USAGE","textChars":23,"textLines":1,"bbox":[56,682,330,20]}
-{"kind":"textbox","id":"sh/ipgzi1on","slide":1,"text":"01","textPreview":"01","textChars":2,"textLines":1,"bbox":[1180,682,44,20]}
-{"kind":"notes","id":"nt/yur45v","slide":1,"text":"Source: User-provided Borderless chatbot architecture.\nKey message: personal context improves relevance; confirmation keeps profile updates under user control."}
-{"kind":"slide","id":"sl/1vsng0","slide":2,"title":"RETRIEVAL-AUGMENTED GENERATION","textShapes":19}
-{"kind":"textbox","id":"sh/50jadcje","slide":2,"text":"RETRIEVAL-AUGMENTED GENERATION","textPreview":"RETRIEVAL-AUGMENTED GENERATION","textChars":30,"textLines":1,"bbox":[56,42,450,24]}
-{"kind":"textbox","id":"sh/idsr2xk3","slide":2,"text":"Answers grounded in official sources","textPreview":"Answers grounded in official sources","textChars":36,"textLines":1,"bbox":[56,84,870,62]}
-{"kind":"textbox","id":"sh/jy1sb21o","slide":2,"text":"Before the model answers, Borderless retrieves relevant government guidance and passes it into the prompt as context.","textPreview":"Before the model answers, Borderless retrieves relevant government guidance and passes it into the prompt as context.","textChars":117,"textLines":1,"bbox":[56,160,900,52]}
-{"kind":"shape","id":"sh/wba9072x","slide":2,"bbox":[56,270,236,226]}
-{"kind":"shape","id":"sh/hcja9cji","slide":2,"bbox":[78,292,34,34]}
-{"kind":"textbox","id":"sh/u9sryxkr","slide":2,"text":"1","textPreview":"1","textChars":1,"textLines":1,"bbox":[78,293,34,32]}
-{"kind":"textbox","id":"sh/va1s721c","slide":2,"text":"Official documents","textPreview":"Official documents","textChars":18,"textLines":1,"bbox":[78,340,192,42]}
-{"kind":"textbox","id":"sh/87q9wn21","slide":2,"text":"Belastingdienst, SVB and GrenzInfoPunkt documents are stored as searchable vectors.","textPreview":"Belastingdienst, SVB and GrenzInfoPunkt documents are stored as searchable vectors.","textChars":83,"textLines":1,"bbox":[78,392,192,78]}
-{"kind":"shape","id":"sh/98za5sjm","slide":2,"bbox":[292,383,56,0]}
-{"kind":"shape","id":"sh/9obmhkz2","slide":2,"bbox":[348,270,236,226]}
-{"kind":"shape","id":"sh/8325ofih","slide":2,"bbox":[370,292,34,34]}
-{"kind":"textbox","id":"sh/7294fahw","slide":2,"text":"2","textPreview":"2","textChars":1,"textLines":1,"bbox":[370,293,34,32]}
-{"kind":"textbox","id":"sh/m103m50b","slide":2,"text":"Profile-aware search","textPreview":"Profile-aware search","textChars":20,"textLines":1,"bbox":[370,340,192,42]}
-{"kind":"textbox","id":"sh/l0rmd0z6","slide":2,"text":"A person working in Germany receives German-relevant material, not unrelated Belgian tax rules.","textPreview":"A person working in Germany receives German-relevant material, not unrelated Belgian tax rules.","textChars":95,"textLines":1,"bbox":[370,392,192,78]}
-{"kind":"shape","id":"sh/kzilkvil","slide":2,"bbox":[584,383,56,0]}
-{"kind":"shape","id":"sh/zy94bqh0","slide":2,"bbox":[640,270,236,226]}
-{"kind":"shape","id":"sh/yx03il0f","slide":2,"bbox":[662,292,34,34]}
-{"kind":"textbox","id":"sh/xwrm90ju","slide":2,"text":"3","textPreview":"3","textChars":1,"textLines":1,"bbox":[662,293,34,32]}
-{"kind":"textbox","id":"sh/cvylgvi9","slide":2,"text":"Context injection","textPreview":"Context injection","textChars":17,"textLines":1,"bbox":[662,340,192,42]}
-{"kind":"textbox","id":"sh/ormdcfuh","slide":2,"text":"The most relevant legal passages enter the model prompt as ground truth.","textPreview":"The most relevant legal passages enter the model prompt as ground truth.","textChars":72,"textLines":1,"bbox":[662,392,192,78]}
-{"kind":"shape","id":"sh/psvelkv2","slide":2,"bbox":[876,383,56,0]}
-{"kind":"shape","id":"sh/2p4vapcb","slide":2,"bbox":[932,270,236,226]}
-{"kind":"shape","id":"sh/nqdwjudw","slide":2,"bbox":[954,292,34,34]}
-{"kind":"textbox","id":"sh/0nmd8ful","slide":2,"text":"4","textPreview":"4","textChars":1,"textLines":1,"bbox":[954,293,34,32]}
-{"kind":"textbox","id":"sh/1ovuhkvq","slide":2,"text":"Traceable answer","textPreview":"Traceable answer","textChars":16,"textLines":1,"bbox":[954,340,192,42]}
-{"kind":"textbox","id":"sh/elkv65cf","slide":2,"text":"The assistant answers from that context and the chat shows the exact source URLs.","textPreview":"The assistant answers from that context and the chat shows the exact source URLs.","textChars":81,"textLines":1,"bbox":[954,392,192,78]}
-{"kind":"textbox","id":"sh/fmtcfad0","slide":2,"text":"Why it matters","textPreview":"Why it matters","textChars":14,"textLines":1,"bbox":[56,552,180,24]}
-{"kind":"textbox","id":"sh/kj6dkzup","slide":2,"text":"The model does not rely on general legal knowledge alone. It works from current, official guidance that users can open and check.","textPreview":"The model does not rely on general legal knowledge alone. It works from current, official guidance that users can open and check.","textChars":129,"textLines":1,"bbox":[56,583,1070,28]}
-{"kind":"shape","id":"sh/lkfet4ba","slide":2,"bbox":[56,672,1168,0]}
-{"kind":"textbox","id":"sh/ve1gjyxc","slide":2,"text":"BORDERLESS  /  AI USAGE","textPreview":"BORDERLESS  /  AI USAGE","textChars":23,"textLines":1,"bbox":[56,682,330,20]}
-{"kind":"textbox","id":"sh/ud8zadwr","slide":2,"text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[1180,682,44,20]}
-{"kind":"notes","id":"nt/1vsng0","slide":2,"text":"Source: User-provided Borderless RAG architecture.\nKey message: retrieval narrows the answer to official, relevant guidance and exposes its sources."}
+{"kind":"deck","id":"pr/vwlwva","name":"Deck"}
+{"kind":"layout","layoutId":"a5fe8733-871c-4d28-86cc-2d378bdfa605","name":"Master","type":"master"}
+{"kind":"layout","layoutId":"3cd6577c-ff96-45d4-80a1-54ebd06e7d3c","name":"Title Slide","type":"title"}
+{"kind":"slide","id":"sl/4bush0","slide":1,"title":"AI IN BORDERLESS","textShapes":22}
+{"kind":"textbox","id":"sh/8ji9wzml","slide":1,"text":"AI IN BORDERLESS","textPreview":"AI IN BORDERLESS","textChars":16,"textLines":1,"bbox":[56,42,300,24]}
+{"kind":"textbox","id":"sh/7y98nu50","slide":1,"text":"A personal AI guide","textPreview":"A personal AI guide","textChars":19,"textLines":1,"bbox":[56,84,910,62]}
+{"kind":"textbox","id":"sh/mx0rup4f","slide":1,"text":"Personal context. User control.","textPreview":"Personal context. User control.","textChars":31,"textLines":1,"bbox":[56,160,890,40]}
+{"kind":"shape","id":"sh/lwrqlkna","slide":1,"bbox":[56,286,34,34]}
+{"kind":"textbox","id":"sh/kvi9sfmp","slide":1,"text":"1","textPreview":"1","textChars":1,"textLines":1,"bbox":[56,287,34,32]}
+{"kind":"textbox","id":"sh/zu98ja54","slide":1,"text":"Question","textPreview":"Question","textChars":8,"textLines":1,"bbox":[56,334,205,34]}
+{"kind":"textbox","id":"sh/yt0rqpoj","slide":1,"text":"The user asks.","textPreview":"The user asks.","textChars":14,"textLines":1,"bbox":[56,374,205,106]}
+{"kind":"shape","id":"sh/xs7qhkny","slide":1,"bbox":[223,303,47,0]}
+{"kind":"shape","id":"sh/crypof6d","slide":1,"bbox":[286,286,34,34]}
+{"kind":"textbox","id":"sh/mx0bq5ov","slide":1,"text":"2","textPreview":"2","textChars":1,"textLines":1,"bbox":[286,287,34,32]}
+{"kind":"textbox","id":"sh/ny9sza5g","slide":1,"text":"Context","textPreview":"Context","textChars":7,"textLines":1,"bbox":[286,334,205,34]}
+{"kind":"textbox","id":"sh/8zitsf61","slide":1,"text":"Profile + open tasks.","textPreview":"Profile + open tasks.","textChars":21,"textLines":1,"bbox":[286,374,205,106]}
+{"kind":"shape","id":"sh/90ra1knm","slide":1,"bbox":[453,303,47,0]}
+{"kind":"shape","id":"sh/ytgrmloz","slide":1,"bbox":[516,286,34,34]}
+{"kind":"textbox","id":"sh/zu9svq5k","slide":1,"text":"3","textPreview":"3","textChars":1,"textLines":1,"bbox":[516,287,34,32]}
+{"kind":"textbox","id":"sh/0vitov65","slide":1,"text":"Secure API","textPreview":"Secure API","textChars":10,"textLines":1,"bbox":[516,334,205,34]}
+{"kind":"textbox","id":"sh/lwrax0na","slide":1,"text":"Key stays on server.","textPreview":"Key stays on server.","textChars":20,"textLines":1,"bbox":[516,374,205,106]}
+{"kind":"shape","id":"sh/q5grilon","slide":1,"bbox":[683,303,47,0]}
+{"kind":"shape","id":"sh/bqpsrq58","slide":1,"bbox":[746,286,34,34]}
+{"kind":"textbox","id":"sh/fa58zml0","slide":1,"text":"4","textPreview":"4","textChars":1,"textLines":1,"bbox":[746,287,34,32]}
+{"kind":"textbox","id":"sh/e9c7qh4f","slide":1,"text":"Guidance","textPreview":"Guidance","textChars":8,"textLines":1,"bbox":[746,334,205,34]}
+{"kind":"textbox","id":"sh/1wnq1w36","slide":1,"text":"No invented figures.","textPreview":"No invented figures.","textChars":20,"textLines":1,"bbox":[746,374,205,106]}
+{"kind":"shape","id":"sh/gbepsrml","slide":1,"bbox":[913,303,47,0]}
+{"kind":"shape","id":"sh/3y583mlc","slide":1,"bbox":[976,286,34,34]}
+{"kind":"textbox","id":"sh/2xw7uh4r","slide":1,"text":"5","textPreview":"5","textChars":1,"textLines":1,"bbox":[976,287,34,32]}
+{"kind":"textbox","id":"sh/p0nq5w32","slide":1,"text":"Confirmation","textPreview":"Confirmation","textChars":12,"textLines":1,"bbox":[976,334,205,34]}
+{"kind":"textbox","id":"sh/ozepwrmx","slide":1,"text":"User approves updates.","textPreview":"User approves updates.","textChars":22,"textLines":1,"bbox":[976,374,205,106]}
+{"kind":"shape","id":"sh/j21or2ls","slide":1,"bbox":[56,532,1168,94]}
+{"kind":"textbox","id":"sh/i1s7ix47","slide":1,"text":"Safety","textPreview":"Safety","textChars":6,"textLines":1,"bbox":[82,551,220,24]}
+{"kind":"textbox","id":"sh/87q5s325","slide":1,"text":"The user stays in control.","textPreview":"The user stays in control.","textChars":26,"textLines":1,"bbox":[82,579,1062,28]}
+{"kind":"shape","id":"sh/98zm18jq","slide":1,"bbox":[56,672,1168,0]}
+{"kind":"textbox","id":"sh/ml8nqtkz","slide":1,"text":"BORDERLESS  /  AI USAGE","textPreview":"BORDERLESS  /  AI USAGE","textChars":23,"textLines":1,"bbox":[56,682,330,20]}
+{"kind":"textbox","id":"sh/n6h4zy1k","slide":1,"text":"01","textPreview":"01","textChars":2,"textLines":1,"bbox":[1180,682,44,20]}
+{"kind":"notes","id":"nt/4bush0","slide":1,"text":"Source: User-provided Borderless chatbot architecture.\nKey message: personal context improves relevance; confirmation keeps profile updates under user control."}
+{"kind":"slide","id":"sl/15bwvh","slide":2,"title":"RETRIEVAL-AUGMENTED GENERATION","textShapes":19}
+{"kind":"textbox","id":"sh/7u5kf6ds","slide":2,"text":"RETRIEVAL-AUGMENTED GENERATION","textPreview":"RETRIEVAL-AUGMENTED GENERATION","textChars":30,"textLines":1,"bbox":[56,42,450,24]}
+{"kind":"textbox","id":"sh/8velorud","slide":2,"text":"Official-source answers","textPreview":"Official-source answers","textChars":23,"textLines":1,"bbox":[56,84,870,62]}
+{"kind":"textbox","id":"sh/9w7mhwvy","slide":2,"text":"RAG retrieves relevant government guidance before every response.","textPreview":"RAG retrieves relevant government guidance before every response.","textChars":65,"textLines":1,"bbox":[56,160,900,40]}
+{"kind":"shape","id":"sh/y5w3ihwb","slide":2,"bbox":[56,270,236,226]}
+{"kind":"shape","id":"sh/z65kbmdg","slide":2,"bbox":[78,292,34,34]}
+{"kind":"textbox","id":"sh/k7elkre1","slide":2,"text":"1","textPreview":"1","textChars":1,"textLines":1,"bbox":[78,293,34,32]}
+{"kind":"textbox","id":"sh/l8n2dwvm","slide":2,"text":"Official documents","textPreview":"Official documents","textChars":18,"textLines":1,"bbox":[78,340,192,42]}
+{"kind":"textbox","id":"sh/i1g3ulcf","slide":2,"text":"Belastingdienst, SVB, GrenzInfoPunkt.","textPreview":"Belastingdienst, SVB, GrenzInfoPunkt.","textChars":37,"textLines":1,"bbox":[78,392,192,78]}
+{"kind":"shape","id":"sh/j2p4nqd0","slide":2,"bbox":[292,383,56,0]}
+{"kind":"shape","id":"sh/jy90j65c","slide":2,"bbox":[348,270,236,226]}
+{"kind":"shape","id":"sh/ixgza14r","slide":2,"bbox":[370,292,34,34]}
+{"kind":"textbox","id":"sh/50rilgni","slide":2,"text":"2","textPreview":"2","textChars":1,"textLines":1,"bbox":[370,293,34,32]}
+{"kind":"textbox","id":"sh/kzihcbmx","slide":2,"text":"Filtered search","textPreview":"Filtered search","textChars":15,"textLines":1,"bbox":[370,340,192,42]}
+{"kind":"textbox","id":"sh/7290n658","slide":2,"text":"By profile and country.","textPreview":"By profile and country.","textChars":23,"textLines":1,"bbox":[370,392,192,78]}
+{"kind":"shape","id":"sh/610zel4n","slide":2,"bbox":[584,383,56,0]}
+{"kind":"shape","id":"sh/t4ripgne","slide":2,"bbox":[640,270,236,226]}
+{"kind":"shape","id":"sh/s3ihgbmt","slide":2,"bbox":[662,292,34,34]}
+{"kind":"textbox","id":"sh/fqt0rq5k","slide":2,"text":"3","textPreview":"3","textChars":1,"textLines":1,"bbox":[662,293,34,32]}
+{"kind":"textbox","id":"sh/u50jil4z","slide":2,"text":"Prompt context","textPreview":"Prompt context","textChars":14,"textLines":1,"bbox":[662,340,192,42]}
+{"kind":"textbox","id":"sh/axob69sj","slide":2,"text":"Relevant passages only.","textPreview":"Relevant passages only.","textChars":23,"textLines":1,"bbox":[662,392,192,78]}
+{"kind":"shape","id":"sh/byxczet4","slide":2,"bbox":[876,383,56,0]}
+{"kind":"shape","id":"sh/cz6t8ja9","slide":2,"bbox":[932,270,236,226]}
+{"kind":"shape","id":"sh/x0fu1obu","slide":2,"bbox":[954,292,34,34]}
+{"kind":"textbox","id":"sh/294b29s7","slide":2,"text":"4","textPreview":"4","textChars":1,"textLines":1,"bbox":[954,293,34,32]}
+{"kind":"textbox","id":"sh/3adcvets","slide":2,"text":"Source links","textPreview":"Source links","textChars":12,"textLines":1,"bbox":[954,340,192,42]}
+{"kind":"textbox","id":"sh/ov6t4jad","slide":2,"text":"Each answer is traceable.","textPreview":"Each answer is traceable.","textChars":25,"textLines":1,"bbox":[954,392,192,78]}
+{"kind":"textbox","id":"sh/pwfuxoby","slide":2,"text":"Why it matters","textPreview":"Why it matters","textChars":14,"textLines":1,"bbox":[56,552,180,24]}
+{"kind":"textbox","id":"sh/m58vedsr","slide":2,"text":"Official guidance, shown with the answer.","textPreview":"Official guidance, shown with the answer.","textChars":41,"textLines":1,"bbox":[56,583,1070,28]}
+{"kind":"shape","id":"sh/76hc7y9w","slide":2,"bbox":[56,672,1168,0]}
+{"kind":"textbox","id":"sh/h0jexcve","slide":2,"text":"BORDERLESS  /  AI USAGE","textPreview":"BORDERLESS  /  AI USAGE","textChars":23,"textLines":1,"bbox":[56,682,330,20]}
+{"kind":"textbox","id":"sh/wzax47ut","slide":2,"text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[1180,682,44,20]}
+{"kind":"notes","id":"nt/15bwvh","slide":2,"text":"Source: User-provided Borderless RAG architecture.\nKey message: retrieval narrows the answer to official, relevant guidance and exposes its sources."}
