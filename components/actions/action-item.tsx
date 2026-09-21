@@ -16,7 +16,7 @@ export function ActionItem({ action, onToggle }: { action: Action; onToggle: () 
   const deadline = formatDate(action.deadline);
 
   return (
-    <Card className={cn("overflow-hidden", action.completed && "bg-surface")}>
+    <Card className={cn("overflow-hidden rounded-none border-0", action.completed && "bg-surface")}>
       <div className="flex items-start gap-3 p-4 sm:p-5">
         <button
           type="button"
@@ -25,7 +25,7 @@ export function ActionItem({ action, onToggle }: { action: Action; onToggle: () 
           aria-label={`Mark "${action.title}" as ${action.completed ? "not done" : "done"}`}
           onClick={onToggle}
           className={cn(
-            "mt-0.5 grid size-5 shrink-0 place-items-center rounded-md border transition-colors",
+            "mt-0.5 grid size-5 shrink-0 place-items-center rounded-sm border transition-colors",
             action.completed
               ? "border-primary bg-primary text-primary-foreground"
               : "border-input bg-card hover:border-primary",

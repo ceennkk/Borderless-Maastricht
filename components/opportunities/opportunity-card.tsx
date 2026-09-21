@@ -22,7 +22,7 @@ export function OpportunityCard({ opportunity }: { opportunity: Opportunity }) {
   const [open, setOpen] = useState(false);
 
   return (
-    <Card className="overflow-hidden">
+    <Card className="overflow-hidden rounded-none border-0">
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}

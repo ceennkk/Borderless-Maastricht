@@ -271,16 +271,16 @@ function SimulationHistory({
       <div className="flex items-center gap-2">
         <History className="size-5 text-muted-foreground" aria-hidden />
         <h2 className="text-lg font-semibold tracking-tight">Saved simulations</h2>
-        <span className="rounded-full bg-secondary px-2 py-0.5 text-xs text-muted-foreground">
+        <span className="border-l border-border pl-2 text-xs text-muted-foreground">
           {simulations.length}
         </span>
       </div>
-      <div className="space-y-2">
+      <div className="divide-y divide-border border border-border bg-card">
         {simulations.map((simulation) => {
           const label = LIFE_CHANGE_META[simulation.result.change.type].label;
           const actionCount = deriveActions(simulation.result.impacts).length;
           return (
-            <details key={simulation.id} className="group rounded-xl border border-border bg-card">
+            <details key={simulation.id} className="group">
               <summary className="flex cursor-pointer list-none items-center gap-3 p-4">
                 <ChevronDown className="size-4 shrink-0 text-muted-foreground transition-transform group-open:rotate-180" />
                 <div className="min-w-0 flex-1">
@@ -290,7 +290,7 @@ function SimulationHistory({
                   </p>
                 </div>
                 {simulation.todoActionIds.length > 0 && (
-                  <span className="rounded-full bg-ok-surface px-2 py-1 text-xs font-medium text-ok-foreground">
+                  <span className="border-l-2 border-ok pl-2 text-xs font-medium text-ok-foreground">
                     In todos
                   </span>
                 )}

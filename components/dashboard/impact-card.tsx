@@ -18,7 +18,8 @@ export function ImpactCard({ impact }: { impact: Impact }) {
   return (
     <Card
       className={cn(
-        "relative flex h-full flex-col gap-3 overflow-hidden p-5",
+        "relative flex h-full flex-col gap-4 overflow-hidden rounded-none border-0 bg-card p-6",
+        "border-b border-r border-border last:border-b-0",
         "before:absolute before:inset-y-0 before:left-0 before:w-1 before:content-['']",
         ACCENT[impact.status],
       )}
@@ -31,8 +32,8 @@ export function ImpactCard({ impact }: { impact: Impact }) {
         <StatusBadge status={impact.status} showIcon={false} />
       </div>
 
-      <div className="space-y-1.5">
-        <p className="font-medium leading-snug">{impact.title}</p>
+      <div className="space-y-2">
+        <p className="font-display text-xl leading-snug">{impact.title}</p>
         <p className="text-sm leading-relaxed text-muted-foreground">{impact.explanation}</p>
       </div>
 

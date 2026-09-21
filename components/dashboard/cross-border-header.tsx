@@ -14,28 +14,26 @@ export function CrossBorderHeader({ profile }: { profile: UserProfile }) {
   const countries = relevantCountries(profile);
 
   return (
-    <header className="space-y-3">
-      <p className="text-sm font-medium uppercase tracking-wider text-muted-foreground">
+    <header className="space-y-5 border-b border-border pb-8">
+      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
         Your cross-border life
       </p>
 
-      <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
         {countries.map((country, i) => (
-          <span key={country} className="flex items-center gap-3">
-            {i > 0 && <ArrowLeftRight className="size-5 text-muted-foreground" aria-hidden />}
-            <span className="flex items-center gap-2 text-2xl font-semibold tracking-tight sm:text-3xl">
-              <span aria-hidden>{COUNTRY_META[country].flag}</span>
+          <span key={country} className="flex items-center gap-4">
+            {i > 0 && <ArrowLeftRight className="size-5 text-border" aria-hidden />}
+            <span className="font-display text-4xl font-medium tracking-tight sm:text-5xl">
               {COUNTRY_META[country].name}
             </span>
           </span>
         ))}
       </div>
 
-      <p className="text-muted-foreground">
-        {summarise(profile)}
-      </p>
-
-      <RegistrationStatusBadge profile={profile} />
+      <div className="flex flex-col gap-3 text-sm sm:flex-row sm:items-center sm:gap-6">
+        <p className="text-muted-foreground">{summarise(profile)}</p>
+        <RegistrationStatusBadge profile={profile} />
+      </div>
     </header>
   );
 }
@@ -74,7 +72,7 @@ function RegistrationStatusBadge({ profile }: { profile: UserProfile }) {
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-medium",
+        "inline-flex items-center gap-1.5 border-l-2 pl-2 text-xs font-medium",
         config.className,
       )}
     >

@@ -28,7 +28,7 @@ export function OpportunitiesView() {
         description="None of this is required. Things you could benefit from, not things you have to do."
       />
 
-      <div className="flex flex-wrap items-center gap-x-2 gap-y-1 rounded-lg border border-border bg-surface px-4 py-2.5 text-sm">
+      <div className="flex flex-wrap items-center gap-x-2 gap-y-1 border-l-2 border-primary bg-surface px-4 py-3 text-sm">
         <span className="text-muted-foreground">
           Looking for what you <strong className="font-medium text-foreground">have</strong> to do?
         </span>
@@ -43,7 +43,7 @@ export function OpportunitiesView() {
         </Button>
       </div>
 
-      <div className="grid gap-3 lg:grid-cols-2">
+      <div className="divide-y divide-border border border-border bg-card">
         {opportunities.map((o) => (
           <OpportunityCard key={o.id} opportunity={o} />
         ))}

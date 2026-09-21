@@ -25,7 +25,7 @@ export function ChangePicker({
   onSelect: (type: LifeChangeType) => void;
 }) {
   return (
-    <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="grid overflow-hidden border border-border bg-border sm:grid-cols-2">
       {SIMULATOR_CHANGE_TYPES.map((type) => {
         const meta = LIFE_CHANGE_META[type];
         const Icon = ICON[type] ?? Briefcase;
@@ -38,13 +38,24 @@ export function ChangePicker({
             onClick={() => onSelect(type)}
             aria-pressed={active}
             className={cn(
-              "flex flex-col gap-2 rounded-xl border p-5 text-left transition-colors",
-              active ? "border-primary bg-secondary" : "border-border bg-card hover:border-primary/40",
+              "flex min-h-32 gap-4 border-b border-r border-border bg-card p-5 text-left transition-colors last:sm:col-span-2",
+              active ? "bg-secondary" : "hover:bg-surface",
             )}
           >
-            <Icon className={cn("size-5", active ? "text-primary" : "text-muted-foreground")} aria-hidden />
-            <span className="font-medium">{meta.label}</span>
-            <span className="text-sm leading-relaxed text-muted-foreground">{meta.description}</span>
+            <span
+              className={cn(
+                "grid size-9 shrink-0 place-items-center border border-border",
+                active ? "bg-primary text-primary-foreground" : "bg-surface text-muted-foreground",
+              )}
+            >
+              <Icon className="size-4" aria-hidden />
+            </span>
+            <span>
+              <span className="block font-semibold">{meta.label}</span>
+              <span className="mt-1 block text-sm leading-relaxed text-muted-foreground">
+                {meta.description}
+              </span>
+            </span>
           </button>
         );
       })}

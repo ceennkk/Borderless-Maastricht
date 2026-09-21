@@ -9,7 +9,7 @@ export function ActionList({
   onToggle: (id: string) => void;
 }) {
   return (
-    <ul className="space-y-3">
+    <ul className="divide-y divide-border border border-border bg-card">
       {actions.map((action) => (
         <li key={action.id}>
           <ActionItem action={action} onToggle={() => onToggle(action.id)} />

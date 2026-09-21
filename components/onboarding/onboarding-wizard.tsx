@@ -62,7 +62,7 @@ export function OnboardingWizard({ resetNotice = false }: { resetNotice?: boolea
 
       <main className="mx-auto max-w-2xl px-6 pb-16">
         {resetNotice && (
-          <div className="mb-6 flex items-start gap-2 rounded-lg border border-ok/25 bg-ok-surface px-4 py-3 text-sm text-ok-foreground">
+          <div className="mb-6 flex items-start gap-2 border-l-2 border-ok bg-ok-surface px-4 py-3 text-sm text-ok-foreground">
             <Check className="mt-0.5 size-4 shrink-0" aria-hidden />
             <p>All local Borderless data was deleted. You can start with a new profile.</p>
           </div>
@@ -78,9 +78,9 @@ export function OnboardingWizard({ resetNotice = false }: { resetNotice?: boolea
           <Progress value={((safeIndex + 1) / steps.length) * 100} />
         </div>
 
-        <Card className="mt-6 p-6 sm:p-8">
+        <Card className="mt-6 rounded-none p-6 sm:p-8">
           <div className="space-y-1.5">
-            <h1 className="text-2xl font-semibold tracking-tight">{step.question}</h1>
+            <h1 className="font-display text-3xl font-medium tracking-tight">{step.question}</h1>
             {step.description && (
               <p className="text-sm leading-relaxed text-muted-foreground">{step.description}</p>
             )}

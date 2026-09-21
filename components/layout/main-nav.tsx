@@ -21,10 +21,10 @@ export function MainNav() {
             href={item.href}
             aria-current={active ? "page" : undefined}
             className={cn(
-              "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+              "flex items-center gap-3 border-l-2 px-3 py-2.5 text-sm font-medium transition-colors",
               active
-                ? "bg-secondary text-foreground"
-                : "text-muted-foreground hover:bg-secondary/60 hover:text-foreground",
+                ? "border-sidebar-foreground bg-sidebar-foreground/10 text-sidebar-foreground"
+                : "border-transparent text-sidebar-foreground/58 hover:border-sidebar-foreground/30 hover:text-sidebar-foreground",
             )}
           >
             <Icon className="size-4 shrink-0" aria-hidden />
@@ -43,7 +43,7 @@ export function MobileNav() {
   return (
     <nav
       aria-label="Main"
-      className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-card/95 backdrop-blur md:hidden"
+      className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-background/95 backdrop-blur md:hidden"
     >
       <div className="mx-auto grid max-w-lg grid-cols-4">
         {MAIN_NAV.map((item) => {

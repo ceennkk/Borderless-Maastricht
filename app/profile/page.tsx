@@ -44,12 +44,12 @@ export default function ProfilePage() {
       />
 
       {ready && isDemo && (
-        <div className="rounded-lg border border-dashed border-border bg-surface px-4 py-3 text-sm text-muted-foreground">
+        <div className="border-l-2 border-primary bg-surface px-4 py-3 text-sm text-muted-foreground">
           This is the demo profile. Complete onboarding to replace it with your own.
         </div>
       )}
 
-      <Card className="divide-y divide-border">
+      <Card className="divide-y divide-border rounded-none">
         <Row label="Name" value={profile.name} />
         <Row
           label="Lives in"

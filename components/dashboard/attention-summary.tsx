@@ -12,7 +12,7 @@ export function AttentionSummary({ impacts }: { impacts: Impact[] }) {
 
   if (count === 0) {
     return (
-      <Card className="flex items-center gap-4 border-ok/25 bg-ok-surface p-5">
+      <Card className="flex items-center gap-4 rounded-none border-x-0 border-ok/25 bg-ok-surface p-5">
         <CheckCircle2 className="size-6 shrink-0 text-ok" aria-hidden />
         <div className="flex-1">
           <p className="font-semibold text-ok-foreground">Nothing needs your attention</p>
@@ -25,7 +25,7 @@ export function AttentionSummary({ impacts }: { impacts: Impact[] }) {
   }
 
   return (
-    <Card className="flex flex-col gap-4 border-action/25 bg-action-surface p-5 sm:flex-row sm:items-center">
+    <Card className="flex flex-col gap-4 rounded-none border-x-0 border-action/25 bg-action-surface p-5 sm:flex-row sm:items-center">
       <TriangleAlert className="size-6 shrink-0 text-action" aria-hidden />
       <div className="flex-1">
         <p className="font-semibold text-action-foreground">

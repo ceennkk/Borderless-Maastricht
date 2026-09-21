@@ -33,17 +33,21 @@ export function AppShell({ children }: { children: ReactNode }) {
   return (
     <div className="min-h-dvh md:flex">
       {/* Desktop sidebar */}
-      <aside className="sticky top-0 hidden h-dvh w-64 shrink-0 flex-col border-r border-border bg-card px-4 py-5 md:flex">
-        <Logo href="/dashboard" className="px-2" />
+      <aside className="sticky top-0 hidden h-dvh w-68 shrink-0 flex-col bg-sidebar px-5 py-6 text-sidebar-foreground md:flex">
+        <Logo href="/dashboard" inverted className="px-2" />
+
+        <p className="mt-3 px-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-sidebar-foreground/45">
+          Maastricht Euregio
+        </p>
 
         <div className="mt-8 flex-1">
           <MainNav />
         </div>
 
-        <div className="space-y-1 border-t border-border pt-4">
+        <div className="space-y-1 border-t border-sidebar-foreground/15 pt-4">
           <Button
             variant="ghost"
-            className="w-full justify-start gap-3 px-3 text-muted-foreground hover:text-foreground"
+            className="w-full justify-start gap-3 px-3 text-sidebar-foreground/70 hover:bg-sidebar-foreground/8 hover:text-sidebar-foreground"
             onClick={() => setAskOpen(true)}
           >
             <Sparkles className="size-4" />
@@ -52,7 +56,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           <Button
             asChild
             variant="ghost"
-            className="w-full justify-start gap-3 px-3 text-muted-foreground hover:text-foreground"
+            className="w-full justify-start gap-3 px-3 text-sidebar-foreground/70 hover:bg-sidebar-foreground/8 hover:text-sidebar-foreground"
           >
             <Link href="/profile">
               <User className="size-4" />
@@ -63,7 +67,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       </aside>
 
       {/* Mobile top bar */}
-      <header className="sticky top-0 z-30 flex items-center justify-between border-b border-border bg-card px-4 py-3 md:hidden">
+      <header className="sticky top-0 z-30 flex items-center justify-between border-b border-border bg-background/95 px-4 py-3 backdrop-blur md:hidden">
         <Logo href="/dashboard" />
         <div className="flex items-center gap-1">
           <Button variant="ghost" size="icon" onClick={() => setAskOpen(true)} aria-label="Ask Borderless">
@@ -78,7 +82,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       </header>
 
       <main className="flex-1 pb-20 md:pb-0">
-        <div className="mx-auto w-full max-w-5xl px-4 py-8 sm:px-6 lg:px-8 lg:py-12">{children}</div>
+        <div className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-7 lg:px-10 lg:py-14">{children}</div>
       </main>
 
       <MobileNav />
