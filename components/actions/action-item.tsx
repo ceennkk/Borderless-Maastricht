@@ -16,7 +16,7 @@ export function ActionItem({ action, onToggle }: { action: Action; onToggle: () 
   const deadline = formatDate(action.deadline);
 
   return (
-    <Card className={cn("overflow-hidden rounded-none border-0", action.completed && "bg-surface")}>
+    <Card className={cn("overflow-hidden border-0", action.completed && "bg-surface")}>
       <div className="flex items-start gap-3 p-4 sm:p-5">
         <button
           type="button"

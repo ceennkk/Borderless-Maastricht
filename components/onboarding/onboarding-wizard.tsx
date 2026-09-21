@@ -78,7 +78,7 @@ export function OnboardingWizard({ resetNotice = false }: { resetNotice?: boolea
           <Progress value={((safeIndex + 1) / steps.length) * 100} />
         </div>
 
-        <Card className="mt-6 rounded-none p-6 sm:p-8">
+        <Card className="mt-6 p-6 sm:p-8">
           <div className="space-y-1.5">
             <h1 className="text-2xl font-semibold tracking-tight">{step.question}</h1>
             {step.description && (
