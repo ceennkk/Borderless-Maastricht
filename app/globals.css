@@ -54,6 +54,8 @@
 
   --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-brand: var(--font-brand), ui-sans-serif, system-ui, sans-serif;
+  --font-copy: var(--font-copy), ui-sans-serif, system-ui, sans-serif;
 }
 
 :root {
