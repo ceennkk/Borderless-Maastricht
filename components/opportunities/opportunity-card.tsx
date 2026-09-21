@@ -52,7 +52,7 @@ export function OpportunityCard({ opportunity }: { opportunity: Opportunity }) {
         type="button"
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
-        className="flex w-full flex-1 items-start gap-4 p-5 text-left"
+        className="flex h-40 w-full items-start gap-4 p-5 text-left"
       >
         <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-secondary text-primary">
           <Icon className="size-5" aria-hidden />
@@ -70,8 +70,8 @@ export function OpportunityCard({ opportunity }: { opportunity: Opportunity }) {
             )}
           </div>
 
-          <p className="font-semibold leading-snug">{opportunity.title}</p>
-          <p className={cn("text-sm text-muted-foreground", !open && "line-clamp-2")}>
+          <p className="line-clamp-2 font-semibold leading-snug">{opportunity.title}</p>
+          <p className="line-clamp-2 text-sm text-muted-foreground">
             {opportunity.eligibility}
           </p>
         </div>
