@@ -348,6 +348,47 @@ function ruleTax(p: UserProfile): Impact {
 }
 
 function ruleRegistration(p: UserProfile): Impact {
+  const city = p.residenceCity || countryName(p.residenceCountry);
+
+  if (p.registrationStatus === "not_registered") {
+    return impact({
+      id: "imp_registration",
+      category: "REGISTRATION",
+      status: "CHECK",
+      title: `Check whether registering in ${city} is right for you`,
+      explanation:
+        "Not being registered can be fine — for example for a short stay, or if you keep your registration elsewhere. But insurance, tax and student finance often read from your municipal registration, so it is worth checking which option suits your situation best.",
+      actions: [
+        action({
+          id: "act_check_registration",
+          title: `Check if you should register in ${city}`,
+          description: "Find out whether registering with your municipality is required or useful in your situation.",
+          category: "REGISTRATION",
+          authority: p.residenceCity ? `Municipality of ${p.residenceCity}` : "Your municipality",
+          why: "Whether you need to register depends on how long you stay and where else you are registered. Checking early avoids surprises with insurance, tax or student finance.",
+          steps: [
+            "Look up the registration rules on your municipality's website.",
+            "If unsure, ask your municipality or the GrensInfoPunt about your situation.",
+          ],
+          source: SOURCES.gemeente,
+        }),
+      ],
+      sources: [SOURCES.gemeente],
+    });
+  }
+
+  if (p.registrationStatus === "in_progress") {
+    return impact({
+      id: "imp_registration",
+      category: "REGISTRATION",
+      status: "CHECK",
+      title: `Your registration in ${city} is still in progress`,
+      explanation:
+        "Several other steps wait on your registration. If you have not received a confirmation within a few weeks, follow up with your municipality.",
+      sources: [SOURCES.gemeente],
+    });
+  }
+
   return impact({
     id: "imp_registration",
     category: "REGISTRATION",
