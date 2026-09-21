@@ -32,7 +32,7 @@ export default function LandingPage() {
   return (
     <div className="min-h-dvh">
       <header className="mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
-        <Logo />
+        <Logo size="lg" />
         <Button asChild variant="ghost" size="sm">
           <Link href="/dashboard">See the demo</Link>
         </Button>
