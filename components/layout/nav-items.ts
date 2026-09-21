@@ -1,4 +1,4 @@
-import { Compass, LayoutGrid, ListChecks, Split, History, type LucideIcon } from "lucide-react";
+import { Compass, LayoutGrid, ListChecks, Split, History, Users, type LucideIcon } from "lucide-react";
 
 export interface NavItem {
   href: string;
@@ -14,5 +14,6 @@ export const MAIN_NAV: NavItem[] = [
   { href: "/simulations", label: "Saved Plans", shortLabel: "Plans", icon: History },
   { href: "/simulator", label: "Plan a Change", shortLabel: "Plan Change", icon: Split },
   { href: "/actions", label: "My To-Dos", shortLabel: "To-Dos", icon: ListChecks },
-  { href: "/opportunities", label: "Benefits", shortLabel: "Benefits", icon: Compass },
+  { href: "/opportunities", label: "Benefits & Tips", shortLabel: "Benefits", icon: Compass },
+  { href: "/community", label: "Community", shortLabel: "Community", icon: Users },
 ];
