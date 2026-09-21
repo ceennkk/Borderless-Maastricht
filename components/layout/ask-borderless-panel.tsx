@@ -22,6 +22,8 @@ import { useProfile } from "@/hooks/use-profile";
 interface Message {
   role: "user" | "assistant";
   text: string;
+  proposedProfileUpdate?: Partial<UserProfile>;
+  updateApplied?: boolean;
 }
 
 const INITIAL_SUGGESTIONS = [
@@ -55,6 +57,15 @@ export function AskBorderlessPanel({
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
   }, [messages, pending]);
 
+  function applyUpdate(index: number, update: Partial<UserProfile>) {
+    if (profile) {
+      setProfile({ ...profile, ...update });
+      setMessages((msgs) =>
+        msgs.map((msg, i) => (i === index ? { ...msg, updateApplied: true } : msg))
+      );
+    }
+  }
+
   async function send(question: string) {
     const trimmed = question.trim();
     if (!trimmed || pending) return;
@@ -69,9 +80,15 @@ export function AskBorderlessPanel({
     setMessages((m) => [...m, { role: "assistant", text: answer.text }]);
     if (answer.suggestions?.length) setSuggestions(answer.suggestions);
     if (answer.profileUpdate && profile) {
-      setProfile({ ...profile, ...answer.profileUpdate });
-      // Add a small message to the chat indicating the action
-      setMessages((m) => [...m, { role: "assistant", text: "*(I have automatically updated your profile settings to reflect this change!)*" }]);
+      setMessages((m) => [
+        ...m, 
+        { 
+          role: "assistant", 
+          text: "I noticed your situation changed. Would you like me to update your profile with this new information?",
+          proposedProfileUpdate: answer.profileUpdate,
+          updateApplied: false
+        }
+      ]);
     }
     setNotice(
       answer.notice ??
@@ -125,30 +142,48 @@ export function AskBorderlessPanel({
           )}
 
           {messages.map((m, i) => (
-            <div
-              key={i}
-              className={cn(
-                "max-w-[90%] rounded-xl px-4 py-3 text-sm leading-relaxed",
-                m.role === "user"
-                  ? "ml-auto bg-primary text-primary-foreground whitespace-pre-line"
-                  : "bg-secondary text-secondary-foreground",
-              )}
-            >
-              {m.role === "user" ? (
-                m.text
-              ) : (
-                <ReactMarkdown
-                  components={{
-                    a: ({ node: _, ...props }) => <a className="font-medium text-primary underline underline-offset-4 hover:text-primary/80" {...props} />,
-                    p: ({ node: _, ...props }) => <p className="mb-3 last:mb-0" {...props} />,
-                    ul: ({ node: _, ...props }) => <ul className="mb-3 list-inside list-disc space-y-1" {...props} />,
-                    ol: ({ node: _, ...props }) => <ol className="mb-3 list-inside list-decimal space-y-1" {...props} />,
-                    li: ({ node: _, ...props }) => <li className="" {...props} />,
-                    strong: ({ node: _, ...props }) => <strong className="font-semibold text-foreground" {...props} />
-                  }}
+            <div key={i} className={cn("flex flex-col gap-2", m.role === "user" ? "items-end" : "items-start")}>
+              <div
+                className={cn(
+                  "max-w-[90%] rounded-xl px-4 py-3 text-sm leading-relaxed",
+                  m.role === "user"
+                    ? "ml-auto bg-primary text-primary-foreground whitespace-pre-line"
+                    : "bg-secondary text-secondary-foreground",
+                )}
+              >
+                {m.role === "user" ? (
+                  m.text
+                ) : (
+                  <ReactMarkdown
+                    components={{
+                      a: ({ node: _, ...props }) => <a className="font-medium text-primary underline underline-offset-4 hover:text-primary/80" {...props} />,
+                      p: ({ node: _, ...props }) => <p className="mb-3 last:mb-0" {...props} />,
+                      ul: ({ node: _, ...props }) => <ul className="mb-3 list-inside list-disc space-y-1" {...props} />,
+                      ol: ({ node: _, ...props }) => <ol className="mb-3 list-inside list-decimal space-y-1" {...props} />,
+                      li: ({ node: _, ...props }) => <li className="" {...props} />,
+                      strong: ({ node: _, ...props }) => <strong className="font-semibold text-foreground" {...props} />
+                    }}
+                  >
+                    {m.text}
+                  </ReactMarkdown>
+                )}
+              </div>
+              
+              {m.proposedProfileUpdate && !m.updateApplied && (
+                <Button 
+                  size="sm" 
+                  variant="outline"
+                  className="ml-1"
+                  onClick={() => applyUpdate(i, m.proposedProfileUpdate!)}
                 >
-                  {m.text}
-                </ReactMarkdown>
+                  Confirm Profile Update
+                </Button>
+              )}
+              {m.proposedProfileUpdate && m.updateApplied && (
+                <div className="ml-2 text-xs font-medium text-ok flex items-center gap-1.5">
+                  <Sparkles className="size-3" />
+                  Profile updated
+                </div>
               )}
             </div>
           ))}
