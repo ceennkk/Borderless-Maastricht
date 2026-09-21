@@ -8,8 +8,8 @@
  * page without touching it.
  */
 import { useEffect, useMemo, useState } from "react";
-import { useRouter } from "next/navigation";
-import { ArrowRight, Check, ChevronDown, History, ListChecks, RotateCcw, Save, Trash2 } from "lucide-react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { ArrowRight, Check, ListChecks, RotateCcw, Save } from "lucide-react";
 
 import { ChangeForm } from "./change-form";
 import { ChangePicker } from "./change-picker";
@@ -26,7 +26,6 @@ import { toLifeChange } from "@/lib/documents";
 import { buildSituationRows, deriveActions, simulateChange } from "@/lib/rules";
 import {
   addActions,
-  deleteSimulation,
   loadSimulations,
   saveSimulation as persistSimulation,
 } from "@/lib/storage";
@@ -37,10 +36,11 @@ import type {
   SavedSimulation,
   SimulationResult,
 } from "@/lib/types";
-import { createId, formatDate } from "@/lib/utils";
+import { createId } from "@/lib/utils";
 
 export function SimulatorView() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { profile } = useProfile();
 
   const [type, setType] = useState<LifeChangeType | undefined>();
@@ -53,7 +53,22 @@ export function SimulatorView() {
   /** A document waiting to be confirmed, before it becomes a LifeChange. */
   const [analysis, setAnalysis] = useState<DocumentAnalysis | null>(null);
 
-  useEffect(() => setSimulations(loadSimulations()), []);
+  useEffect(() => {
+    const loaded = loadSimulations();
+    setSimulations(loaded);
+    
+    const id = searchParams.get("id");
+    if (id) {
+      const sim = loaded.find((s) => s.id === id);
+      if (sim) {
+        setType(sim.result.change.type);
+        setChange(sim.result.change);
+        setSubmitted(sim.result.change);
+        setSavedResult(sim.result);
+        setActiveSimulationId(sim.id);
+      }
+    }
+  }, [searchParams]);
 
   const result = useMemo(
     () => savedResult ?? (submitted ? simulateChange(profile, submitted) : null),
@@ -119,24 +134,6 @@ export function SimulatorView() {
     router.push("/actions");
   }
 
-  function openSavedSimulation(simulation: SavedSimulation) {
-    setType(simulation.result.change.type);
-    setChange(simulation.result.change);
-    setSubmitted(simulation.result.change);
-    setSavedResult(simulation.result);
-    setActiveSimulationId(simulation.id);
-    setSavedNotice(false);
-    setAnalysis(null);
-  }
-
-  function removeSimulation(id: string) {
-    setSimulations(deleteSimulation(id));
-    if (activeSimulationId === id) {
-      setActiveSimulationId(null);
-      setSavedNotice(false);
-    }
-  }
-
   return (
     <div className="space-y-8">
       <PageHeader
@@ -150,15 +147,6 @@ export function SimulatorView() {
           ) : undefined
         }
       />
-
-      {simulations.length > 0 && (
-        <SimulationHistory
-          simulations={simulations}
-          onOpen={openSavedSimulation}
-          onDelete={removeSimulation}
-        />
-      )}
-
       {!submitted && analysis && (
         <section className="space-y-4">
           <h2 className="text-lg font-semibold tracking-tight">What we found in your document</h2>
@@ -253,71 +241,4 @@ export function SimulatorView() {
   );
 }
 
-function SimulationHistory({
-  simulations,
-  onOpen,
-  onDelete,
-}: {
-  simulations: SavedSimulation[];
-  onOpen: (simulation: SavedSimulation) => void;
-  onDelete: (id: string) => void;
-}) {
-  return (
-    <section className="space-y-3">
-      <div className="flex items-center gap-2">
-        <History className="size-5 text-muted-foreground" aria-hidden />
-        <h2 className="text-lg font-semibold tracking-tight">Saved simulations</h2>
-        <span className="border-l border-border pl-2 text-xs text-muted-foreground">
-          {simulations.length}
-        </span>
-      </div>
-      <div className="divide-y divide-border border border-border bg-card">
-        {simulations.map((simulation) => {
-          const label = LIFE_CHANGE_META[simulation.result.change.type].label;
-          const actionCount = deriveActions(simulation.result.impacts).length;
-          return (
-            <details key={simulation.id} className="group">
-              <summary className="flex cursor-pointer list-none items-center gap-3 p-4">
-                <ChevronDown className="size-4 shrink-0 text-muted-foreground transition-transform group-open:rotate-180" />
-                <div className="min-w-0 flex-1">
-                  <p className="font-medium">{label}</p>
-                  <p className="text-xs text-muted-foreground">
-                    {formatDate(simulation.createdAt)} · {actionCount} todo{actionCount === 1 ? "" : "s"}
-                  </p>
-                </div>
-                {simulation.todoActionIds.length > 0 && (
-                  <span className="border-l-2 border-ok pl-2 text-xs font-medium text-ok-foreground">
-                    In todos
-                  </span>
-                )}
-                <Button
-                  size="icon"
-                  variant="ghost"
-                  className="shrink-0 text-muted-foreground hover:text-destructive"
-                  aria-label="Delete"
-                  title="Delete"
-                  onClick={(event) => {
-                    // Keep the click from toggling the <details> open.
-                    event.preventDefault();
-                    onDelete(simulation.id);
-                  }}
-                >
-                  <Trash2 />
-                </Button>
-              </summary>
-              <div className="space-y-4 border-t border-border px-4 py-4">
-                <p className="text-sm leading-relaxed text-muted-foreground">
-                  {simulation.result.summary}
-                </p>
-                <Button size="sm" variant="outline" onClick={() => onOpen(simulation)}>
-                  Open simulation
-                  <ArrowRight />
-                </Button>
-              </div>
-            </details>
-          );
-        })}
-      </div>
-    </section>
-  );
-}
+
