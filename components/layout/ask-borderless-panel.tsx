@@ -10,6 +10,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Info, Send, Sparkles, X } from "lucide-react";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -155,8 +156,9 @@ export function AskBorderlessPanel({
                   m.text
                 ) : (
                   <ReactMarkdown
+                    remarkPlugins={[remarkGfm]}
                     components={{
-                      a: ({ node: _, ...props }) => <a className="font-medium text-primary underline underline-offset-4 hover:text-primary/80" {...props} />,
+                      a: ({ node: _, ...props }) => <a className="font-medium text-primary underline underline-offset-4 hover:text-primary/80" target="_blank" rel="noopener noreferrer" {...props} />,
                       p: ({ node: _, ...props }) => <p className="mb-3 last:mb-0" {...props} />,
                       ul: ({ node: _, ...props }) => <ul className="mb-3 list-inside list-disc space-y-1" {...props} />,
                       ol: ({ node: _, ...props }) => <ol className="mb-3 list-inside list-decimal space-y-1" {...props} />,
