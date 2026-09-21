@@ -2,10 +2,10 @@
 
 /** One task, collapsed to a checkbox row and expandable to full detail. */
 import { useState } from "react";
-import { Building2, CalendarClock, Check, ChevronDown, FileText } from "lucide-react";
+import { Building2, CalendarClock, Check, ChevronDown } from "lucide-react";
 
+import { ActionDetail } from "./action-detail";
 import { CategoryIcon } from "@/components/shared/category-icon";
-import { SourceLink } from "@/components/shared/source-link";
 import { Card } from "@/components/ui/card";
 import { IMPACT_CATEGORY_META } from "@/lib/constants";
 import type { Action } from "@/lib/types";
@@ -73,73 +73,11 @@ export function ActionItem({ action, onToggle }: { action: Action; onToggle: () 
         </button>
       </div>
 
-      {open && <ActionDetail action={action} />}
+      {open && (
+        <div className="border-t border-border bg-surface/60 px-4 py-5 sm:px-5">
+          <ActionDetail action={action} />
+        </div>
+      )}
     </Card>
-  );
-}
-
-function ActionDetail({ action }: { action: Action }) {
-  return (
-    <div className="space-y-5 border-t border-border bg-surface/60 px-4 py-5 sm:px-5 sm:pl-13">
-      {action.why && (
-        <Section title="Why this matters">
-          <p className="text-sm leading-relaxed text-muted-foreground">{action.why}</p>
-        </Section>
-      )}
-
-      {action.steps && action.steps.length > 0 && (
-        <Section title="What to do">
-          <ol className="space-y-2">
-            {action.steps.map((step, i) => (
-              <li key={i} className="flex gap-3 text-sm leading-relaxed text-muted-foreground">
-                <span className="grid size-5 shrink-0 place-items-center rounded-full bg-secondary text-[11px] font-semibold text-foreground">
-                  {i + 1}
-                </span>
-                {step}
-              </li>
-            ))}
-          </ol>
-        </Section>
-      )}
-
-      {action.documents && action.documents.length > 0 && (
-        <Section title="Documents">
-          <ul className="flex flex-wrap gap-2">
-            {action.documents.map((doc) => (
-              <li
-                key={doc}
-                className="inline-flex items-center gap-1.5 rounded-md border border-border bg-card px-2.5 py-1 text-xs"
-              >
-                <FileText className="size-3.5 text-muted-foreground" aria-hidden />
-                {doc}
-              </li>
-            ))}
-          </ul>
-        </Section>
-      )}
-
-      {action.authority && (
-        <Section title="Authority">
-          <p className="text-sm text-muted-foreground">{action.authority}</p>
-        </Section>
-      )}
-
-      {action.source && (
-        <Section title="Official source">
-          <SourceLink source={action.source} />
-        </Section>
-      )}
-    </div>
-  );
-}
-
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
-  return (
-    <div className="space-y-2">
-      <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-        {title}
-      </h4>
-      {children}
-    </div>
   );
 }

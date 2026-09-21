@@ -225,6 +225,112 @@ export interface DocumentAnalysis {
 }
 
 /* ------------------------------------------------------------------ */
+/* Scheduling                                                          */
+/* ------------------------------------------------------------------ */
+
+/** How the user deals with an authority. Decides what the planner offers. */
+export type ContactChannel = "ONLINE" | "IN_PERSON" | "POST" | "PHONE" | "EMAIL";
+
+/**
+ * One bookable service at an authority.
+ *
+ * The hard part of a municipal portal is not clicking — it is finding which of
+ * forty "Dienstleistungen" is yours, and knowing what to bring. That is what
+ * this captures.
+ */
+export interface BookingService {
+  id: string;
+  /** Exactly what to select in the portal's service list. */
+  serviceName: string;
+  /** What it is for, in plain language. */
+  purpose: string;
+  /** Where to start. May be the portal root rather than a deep link. */
+  url: string;
+  /** How to get there once on the site, when there is no deep link. */
+  navigationHint?: string;
+  documents: string[];
+  /** What the form asks for. `detailKey` links to a stored personal detail. */
+  formFields: Array<{ label: string; detailKey?: string }>;
+  fee?: string;
+  notes?: string;
+}
+
+export interface Authority {
+  id: string;
+  name: string;
+  country: Country;
+  city?: string;
+  /** What this body actually handles, in plain language. */
+  handles: string;
+  categories: ImpactCategory[];
+  channels: ContactChannel[];
+  /** True when you cannot simply walk in. */
+  appointmentRequired: boolean;
+  /** Typical wait in days [min, max]. Indicative only — always verify. */
+  typicalLeadTimeDays: [number, number];
+  bookingUrl?: string;
+  infoUrl: string;
+  email?: string;
+  /** Language to write in. */
+  language: "nl" | "de" | "fr" | "en";
+  /** Bookable services, when this authority has any. */
+  services?: BookingService[];
+}
+
+/** A drafted message. Never sent by the app — the user sends it. */
+export interface MessageDraft {
+  subject: string;
+  body: string;
+  language: Authority["language"];
+  /** Placeholders the user must fill before sending, e.g. "BSN". */
+  placeholders: string[];
+}
+
+export interface ScheduleItem {
+  actionId: string;
+  title: string;
+  authorityId?: string;
+  /** 1-based position in the sequence. */
+  order: number;
+  /** ISO date — earliest sensible start. */
+  startAfter?: string;
+  /** ISO date — the date the plan targets. */
+  doBy: string;
+  channel: ContactChannel;
+  appointmentRequired: boolean;
+  /** Why this sits here in the order. One sentence. */
+  reasoning: string;
+  /** Present when a message makes sense for this step. */
+  draft?: MessageDraft;
+}
+
+export interface SchedulePlan {
+  items: ScheduleItem[];
+  /** One or two sentences framing the plan. */
+  summary: string;
+  /** The date everything is counted from. */
+  anchorDate: string;
+  generatedAt: string;
+  /** Anything the planner could not settle. */
+  caveats: string[];
+}
+
+export type ScheduleJobStatus = "queued" | "running" | "done" | "error";
+
+/** A background planning run the client polls. */
+export interface ScheduleJob {
+  id: string;
+  status: ScheduleJobStatus;
+  /** What the agent is doing right now, for the progress display. */
+  step: string;
+  /** Completed steps, oldest first. */
+  log: string[];
+  plan?: SchedulePlan;
+  error?: string;
+  createdAt: string;
+}
+
+/* ------------------------------------------------------------------ */
 /* Engine results                                                      */
 /* ------------------------------------------------------------------ */
 

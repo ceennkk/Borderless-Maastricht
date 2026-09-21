@@ -44,8 +44,8 @@ see affected areas → **Generate action plan** → `/actions`
 Hackathon MVP on mock data. No auth, no database. Everything the app remembers
 lives in `localStorage`.
 
-**Ask Borderless** and **document upload** are live against OpenAI, and both fall
-back to a mock when no key is configured. The impacts, actions and opportunities
+**Ask Borderless**, **document upload** and the **scheduling agent** are live
+against OpenAI. Ask and upload fall back to a mock when no key is configured. The impacts, actions and opportunities
 on every other screen are still rule-engine output over mock content.
 
 ---
@@ -216,6 +216,129 @@ Three rules this layer enforces, which reviewers should not relax:
 Extraction quality lives in `lib/document-prompt.ts`, which holds the strict
 JSON schema and the instructions. Tune it there, not in the component.
 
+**4. The scheduling agent** (`lib/scheduling.ts`, `app/api/schedule/route.ts`)
+
+Takes the open actions and produces a dated, ordered plan: what unblocks what,
+realistic target dates, the right channel per authority, and a drafted message
+where one is useful.
+
+```
+POST /api/schedule  → job id (202, returns immediately)
+GET  /api/schedule?id=…  → { status, step, log, plan }
+```
+
+It is a **bounded tool loop**, not a single prompt. The agent calls
+`list_authorities` / `get_authority` against `lib/authorities.ts` and is told
+that anything not in a tool result does not exist. This is deliberate: a model
+asked for a waiting time will invent one, and a wrong lead time or channel sends
+someone to the wrong counter. Authority facts are data we control, not
+generated text. `MAX_TOOL_ROUNDS` stops a confused model spinning.
+
+### The action centre has two states, never both
+
+```
+no plan  →  plain task list + an invitation to plan
+a plan   →  the plan IS the list, ordered and dated, next step first
+```
+
+Showing a schedule *above* an unordered copy of the same tasks was the single
+thing that made this page confusing, so `ScheduleTimeline` replaces
+`ActionList` rather than sitting beside it. `ScheduleStep` therefore carries
+everything — order, date, checkbox, expandable detail, draft, booking prep —
+and `ActionDetail` is shared so both states show the same content when opened.
+A completed step shows its state inline and is excluded from the "Completed"
+section, which lists only tasks finished before the plan existed.
+
+The first unfinished step is emphasised, because the question people arrive
+with is "what do I do now?", not "show me everything".
+
+### Three things the model gets wrong unless constrained
+
+Learned by watching it, not by guessing:
+
+1. **Dates ran backwards.** `doBy` was being read as "when the authority
+   replies", so a slow task landed last despite being first in the order. The
+   prompt now defines `doBy` as *when the person must have done their part*, and
+   the route clamps dates to be non-decreasing as a safety net.
+2. **Reasoning contradicted position** — a step explained as urgent, scheduled
+   last. The prompt now requires the two to agree.
+3. **`authorityId` was sometimes omitted**, which silently cost the user the
+   booking preparation. `findAuthorityFor()` resolves it from the task's own
+   authority string and category, so the feature no longer depends on the model
+   remembering a field.
+
+Caveats and the summary are for the *user*: a gap in our own tool data is not a
+caveat, and the summary must not recite the steps listed underneath.
+
+### The boundary — do not move it
+
+**The app never sends a message and never books an appointment.** It drafts, and
+the user sends from their own mail client (`mailto:`) or books through the
+authority's own page. Three reasons this is not timidity:
+
+1. There is no auth. Anything the app sent would be mail from an unverified
+   party in someone else's name.
+2. Public appointment slots are scarce. An agent booking speculatively takes
+   them from people who need them.
+3. Automated booking against government portals generally breaches their terms,
+   and anything CAPTCHA-protected is off limits.
+
+Drafting is where the value is anyway: "write a formal German letter to a
+Krankenkasse" is the part a 22-year-old Dutch student genuinely cannot do.
+
+### Two things that are honest MVP shortcuts
+
+- **Jobs live in a module-level `Map`.** A dev-server restart loses running
+  jobs, and it will not work across instances. Replace with a real queue before
+  deploying anywhere that scales.
+- **`lib/authorities.ts` is demo content.** The URLs are real entry points, but
+  the lead times are indicative and the registry is incomplete. Every row needs
+  verifying against the authority itself. A better prompt cannot fix wrong data.
+
+Calendar export builds an `.ics` in `lib/scheduling.ts` — a file the user
+imports, so it needs no calendar account, no OAuth and no access to anyone's
+calendar. Placeholders in drafts are extracted from the draft text with a regex
+rather than trusted from the model, because a forgotten entry means someone
+posts a letter still reading `[Naam werkgever]`.
+
+### Personal details never reach the model
+
+`lib/personal-details.ts` holds the user's own identifying data — name, date of
+birth, address, BSN, Steuer-ID, insurance number — in `localStorage`, and
+substitutes it into drafts **in the browser, after the answer comes back**.
+
+The agent writes `[BSN]`; `fillDraft()` turns it into a number on the device.
+This is not a limitation to work around, it is the point: a BSN and a date of
+birth are exactly the data you do not send to a third-party API to have it typed
+back to you, and the letter is no worse for it.
+
+Matching is on a normalised token, with per-field aliases across languages, so
+`[Ihr Name]`, `[Uw Naam]` and `[Naam]` all resolve. Dates are rendered in the
+target country's convention (`17.04.2001` for Germany, `17-04-2001` for NL).
+Anything unmatched stays visible as a placeholder and is reported as missing —
+never silently blanked.
+
+**Do not send `PersonalDetails` to any route handler.** If a feature seems to
+need that, it does not — the substitution belongs on the client.
+
+### Appointment preparation, not booking
+
+`Authority.services[]` describes bookable services: which entry to pick in the
+portal's list, how to navigate there, what to bring, what the form asks. The
+`BookingPrepPanel` puts the user's stored answers next to each field with a copy
+button.
+
+This deliberately stops short of booking. Municipal portals are CAPTCHA-guarded,
+a booking is irreversible and made in the user's name, it consumes a scarce
+public slot, automated access generally breaches portal terms, and the app has
+no authentication to establish who is booking. The user's own data does not
+change any of that — it solves filling, not committing.
+
+`serviceName` and `navigationHint` are the most perishable content in the repo;
+portals rename their service lists. They are written as navigation hints rather
+than deep links for that reason, and the panel tells the user to look for the
+closest match.
+
 ---
 
 ## 3. Shared types
@@ -267,6 +390,9 @@ shared change, and say so in the PR.
 | `app/simulator/`, `components/simulator/` | what-if flow |
 | `app/actions/`, `components/actions/` | action centre |
 | `hooks/use-actions.ts` | action state |
+| `lib/scheduling.ts`, `lib/schedule-prompt.ts` | the scheduling agent and its tools |
+| `app/api/schedule/route.ts` | the background job runner |
+| `components/actions/schedule-*.tsx`, `email-draft-panel.tsx` | planner UI |
 
 ### Developer 3 — AI, knowledge/sources, opportunities
 
@@ -281,6 +407,7 @@ shared change, and say so in the PR.
 | `lib/opportunities.ts` | opportunity matching |
 | `app/opportunities/`, `components/opportunities/` | the page |
 | `lib/mock-data.ts` (the `SOURCES` map and opportunities) | the knowledge base |
+| `lib/authorities.ts` | **authority registry — needs verifying against each authority** |
 
 ### Shared — change by agreement
 
@@ -290,12 +417,15 @@ shared change, and say so in the PR.
 
 ## 5. How to run the project
 
-Requires Node 20 or newer.
+Requires Node 20 or newer — `.nvmrc` and the `engines` field pin it.
 
 ```bash
-npm install
+npm ci               # use ci, not install: it honours the lockfile exactly
 npm run dev          # http://localhost:3000
 ```
+
+The app runs with no key and no configuration; the AI features fall back to
+mocks. See the README for enabling them. Each developer uses their own key.
 
 Other scripts:
 
@@ -320,7 +450,7 @@ cp .env.example .env.local
 
 | Variable | |
 | --- | --- |
-| `OPENAI_API_KEY` | Read by `app/api/ask/route.ts` and `app/api/documents/route.ts`, server-side only. Without it both fall back to their mock. |
+| `OPENAI_API_KEY` | Read by the three route handlers under `app/api/`, server-side only. Without it Ask and upload fall back to their mock; the planner reports that it is not configured. |
 | `OPENAI_MODEL` | Optional override. Default `gpt-4.1-mini`. |
 
 Never prefix a secret with `NEXT_PUBLIC_`. Variables with that prefix are inlined
@@ -368,6 +498,17 @@ into the browser bundle and would be publicly readable. Never commit `.env.local
 13. Uploaded documents are never persisted, never logged, and never applied to a
     profile without the user confirming what was read. If you change what leaves
     the device, change the consent text in `DocumentDropzone` in the same commit.
+14. **Borderless does not act on a user's behalf towards a third party.** It
+    drafts and it links; the user sends and books. Do not add an outbox, an
+    email service that writes to authorities, or automated form filling on a
+    booking portal. If a feature needs the app to press "send", it needs a
+    design discussion first, not a pull request.
+15. Facts about authorities — channels, waiting times, whether an appointment is
+    needed — live in `lib/authorities.ts` and reach the model through tools.
+    Never let a prompt generate them.
+16. The user's identifying details (`PersonalDetails`) stay on the device. They
+    are substituted into drafts client-side and must never be put in a prompt,
+    a request body or a log.
 
 **Content**
 

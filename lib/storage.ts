@@ -7,12 +7,14 @@
  *
  * All reads are SSR-safe: they return `null`/defaults when `window` is absent.
  */
+import type { PersonalDetails } from "./personal-details";
 import type { UserProfile } from "./types";
 
 const KEYS = {
   profile: "borderless.profile",
   completedActions: "borderless.completedActions",
   dismissedOpportunities: "borderless.dismissedOpportunities",
+  personalDetails: "borderless.personalDetails",
 } as const;
 
 function read<T>(key: string): T | null {
@@ -74,6 +76,21 @@ export function loadCompletedActionIds(): string[] {
 
 export function saveCompletedActionIds(ids: string[]): void {
   write(KEYS.completedActions, Array.from(new Set(ids)));
+}
+
+/* ---------------------------- personal details ---------------------------- */
+
+/** Identifying data used to fill message drafts. Never leaves the device. */
+export function loadPersonalDetails(): PersonalDetails {
+  return read<PersonalDetails>(KEYS.personalDetails) ?? {};
+}
+
+export function savePersonalDetails(details: PersonalDetails): void {
+  write(KEYS.personalDetails, details);
+}
+
+export function clearPersonalDetails(): void {
+  remove(KEYS.personalDetails);
 }
 
 /* ------------------------------ opportunities ----------------------------- */

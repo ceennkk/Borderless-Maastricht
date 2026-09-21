@@ -6,6 +6,7 @@ import { Pencil, RotateCcw } from "lucide-react";
 
 import { CountryBadge } from "@/components/shared/country-badge";
 import { PageHeader } from "@/components/shared/page-header";
+import { PersonalDetailsForm } from "@/components/shared/personal-details-form";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useProfile } from "@/hooks/use-profile";
@@ -78,6 +79,8 @@ export default function ProfilePage() {
           }
         />
       </Card>
+
+      <PersonalDetailsForm />
 
       <div>
         <Button variant="ghost" onClick={reset} className="text-muted-foreground">
