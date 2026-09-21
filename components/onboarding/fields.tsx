@@ -4,6 +4,7 @@
 import { Check } from "lucide-react";
 
 import { Input } from "@/components/ui/input";
+import { CountryMark } from "@/components/shared/country-badge";
 import { Label } from "@/components/ui/label";
 import { COUNTRIES, COUNTRY_META } from "@/lib/constants";
 import type { Country } from "@/lib/types";
@@ -38,9 +39,7 @@ export function CountryPicker({
                   : "border-border bg-card hover:border-primary/40",
               )}
             >
-              <span className="text-2xl" aria-hidden>
-                {meta.flag}
-              </span>
+              <CountryMark country={country} size="lg" />
               <span className="flex-1">
                 <span className="block text-sm font-medium">{meta.name}</span>
                 <span className="block text-xs text-muted-foreground">{country}</span>

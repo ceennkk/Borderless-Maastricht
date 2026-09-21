@@ -239,7 +239,7 @@ export const ONBOARDING_STEPS: OnboardingStep[] = [
           options={[
             ...COUNTRIES.map((c) => ({
               value: c as string,
-              label: `${COUNTRY_META[c].flag} ${COUNTRY_META[c].name}`,
+              label: COUNTRY_META[c].name,
               hint: HEALTH_INSURANCE_TERM[c],
             })),
             {

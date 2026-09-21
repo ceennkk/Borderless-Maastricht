@@ -209,7 +209,7 @@ export function ProfileEditForm() {
         options={[
           ...COUNTRIES.map((c) => ({
             value: c as string,
-            label: `${COUNTRY_META[c].flag} ${COUNTRY_META[c].name}`,
+            label: COUNTRY_META[c].name,
           })),
           { value: "UNKNOWN", label: "I am not sure" },
         ]}

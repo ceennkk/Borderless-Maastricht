@@ -9,43 +9,76 @@
  * is it, and is it for me — and the rest waits behind a click.
  */
 import { useState } from "react";
-import { ChevronDown } from "lucide-react";
+import {
+  Briefcase,
+  ChevronDown,
+  GraduationCap,
+  Landmark,
+  TrainFront,
+  Users,
+  Wallet,
+  type LucideIcon,
+} from "lucide-react";
 
 import { CountryChip } from "@/components/shared/country-badge";
 import { SourceLink } from "@/components/shared/source-link";
 import { Card } from "@/components/ui/card";
 import { OPPORTUNITY_CATEGORY_META } from "@/lib/constants";
-import type { Opportunity } from "@/lib/types";
+import type { Opportunity, OpportunityCategory } from "@/lib/types";
 import { cn } from "@/lib/utils";
+
+const CATEGORY_ICON: Record<OpportunityCategory, LucideIcon> = {
+  TRANSPORT: TrainFront,
+  STUDENT: GraduationCap,
+  WORK: Briefcase,
+  FINANCE: Wallet,
+  SERVICES: Landmark,
+  COMMUNITY: Users,
+};
 
 export function OpportunityCard({ opportunity }: { opportunity: Opportunity }) {
   const [open, setOpen] = useState(false);
+  const category = OPPORTUNITY_CATEGORY_META[opportunity.category];
+  const Icon = CATEGORY_ICON[opportunity.category];
 
   return (
-    <Card className="overflow-hidden rounded-none border-0">
+    <Card
+      className={cn(
+        "flex flex-col overflow-hidden transition-shadow hover:shadow-md",
+        open && "shadow-md",
+      )}
+    >
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
-        className="flex w-full items-start gap-3 p-4 text-left transition-colors hover:bg-surface/60"
+        className="flex w-full flex-1 items-start gap-4 p-5 text-left"
       >
-        <div className="min-w-0 flex-1 space-y-1">
-          <div className="flex items-center gap-2 text-xs text-muted-foreground">
-            <span className="font-semibold">
-              {OPPORTUNITY_CATEGORY_META[opportunity.category].label}
-            </span>
-            {opportunity.countries?.map((c) => (
-              <CountryChip key={c} country={c} className="text-xs font-normal" />
-            ))}
+        <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-secondary text-primary">
+          <Icon className="size-5" aria-hidden />
+        </span>
+
+        <div className="min-w-0 flex-1 space-y-1.5">
+          <div className="flex items-center justify-between gap-3">
+            <span className="text-xs font-medium text-muted-foreground">{category.label}</span>
+            {opportunity.countries && opportunity.countries.length > 0 && (
+              <span className="flex items-center gap-2.5">
+                {opportunity.countries.map((c) => (
+                  <CountryChip key={c} country={c} className="text-xs text-muted-foreground" />
+                ))}
+              </span>
+            )}
           </div>
 
-          <p className="font-medium leading-snug">{opportunity.title}</p>
-          <p className="line-clamp-1 text-sm text-muted-foreground">{opportunity.eligibility}</p>
+          <p className="font-semibold leading-snug">{opportunity.title}</p>
+          <p className={cn("text-sm text-muted-foreground", !open && "line-clamp-2")}>
+            {opportunity.eligibility}
+          </p>
         </div>
 
         <ChevronDown
           className={cn(
-            "mt-1 size-4 shrink-0 text-muted-foreground transition-transform",
+            "mt-2.5 size-4 shrink-0 text-muted-foreground transition-transform",
             open && "rotate-180",
           )}
           aria-hidden
@@ -53,7 +86,7 @@ export function OpportunityCard({ opportunity }: { opportunity: Opportunity }) {
       </button>
 
       {open && (
-        <div className="space-y-3 border-t border-border bg-surface/60 px-4 py-4">
+        <div className="space-y-3 border-t border-dashed border-border px-5 py-4 pl-[4.75rem]">
           <p className="text-sm leading-relaxed text-muted-foreground">
             {opportunity.description}
           </p>

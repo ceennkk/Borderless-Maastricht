@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowRight, ListChecks, Split, UserRound } from "lucide-react";
 
 import { Logo } from "@/components/layout/logo";
+import { CountryMark } from "@/components/shared/country-badge";
 import { Button } from "@/components/ui/button";
 import { COUNTRY_META } from "@/lib/constants";
 import { COUNTRIES } from "@/lib/constants";
@@ -74,7 +75,8 @@ export default function LandingPage() {
             {COUNTRIES.map((country, index) => (
               <div key={country} className="contents">
                 {index > 0 && <span className="border-line block h-2 w-6 shrink-0 sm:w-16" aria-hidden />}
-                <span className="rounded-full border border-border bg-card px-3 py-1 text-sm font-medium">
+                <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-sm font-medium">
+                  <CountryMark country={country} />
                   {COUNTRY_META[country].name}
                 </span>
               </div>

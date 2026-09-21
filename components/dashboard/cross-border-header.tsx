@@ -1,6 +1,6 @@
 import { CheckCircle2, CircleSlash, Hourglass } from "lucide-react";
 
-import { CountryChip } from "@/components/shared/country-badge";
+import { CountryChip, CountryMark } from "@/components/shared/country-badge";
 import { COUNTRY_META, REGISTRATION_STATUS_META } from "@/lib/constants";
 import { relevantCountries } from "@/lib/opportunities";
 import type { UserProfile } from "@/lib/types";
@@ -24,7 +24,8 @@ export function CrossBorderHeader({ profile }: { profile: UserProfile }) {
         {countries.map((country, i) => (
           <span key={country} className="flex items-center gap-2">
             {i > 0 && <span aria-hidden className="border-line block h-2 w-10 sm:w-16" />}
-            <span className="inline-flex items-center rounded-full border border-border bg-card px-3 py-1 text-sm font-medium">
+            <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-sm font-medium">
+              <CountryMark country={country} />
               {COUNTRY_META[country].name}
             </span>
           </span>
