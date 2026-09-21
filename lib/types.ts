@@ -13,6 +13,15 @@
 /** The three countries of the Maastricht Euregio. */
 export type Country = "NL" | "DE" | "BE";
 
+/**
+ * Whether the person is registered with their city of residence
+ * (BRP in NL, Einwohnermeldeamt in DE, gemeente in BE).
+ *
+ * `in_progress` means the registration has been started but is not yet
+ * confirmed — the UI surfaces this as a pending state.
+ */
+export type RegistrationStatus = "registered" | "not_registered" | "in_progress";
+
 /* ------------------------------------------------------------------ */
 /* User                                                                */
 /* ------------------------------------------------------------------ */
@@ -24,6 +33,8 @@ export interface UserProfile {
   /** Where the person officially lives. Always known. */
   residenceCountry: Country;
   residenceCity: string;
+  /** Whether the person is registered with their city of residence. */
+  registrationStatus?: RegistrationStatus;
 
   isStudent: boolean;
   /** Only meaningful when `isStudent` is true. */

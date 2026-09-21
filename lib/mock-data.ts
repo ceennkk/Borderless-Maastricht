@@ -65,6 +65,7 @@ export const DEMO_PROFILE: UserProfile = {
   name: "Alex",
   residenceCountry: "NL",
   residenceCity: "Maastricht",
+  registrationStatus: "registered",
   isStudent: true,
   studyCountry: "NL",
   studyCity: "Maastricht",

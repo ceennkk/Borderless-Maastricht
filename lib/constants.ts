@@ -10,6 +10,7 @@ import type {
   ImpactStatus,
   LifeChangeType,
   OpportunityCategory,
+  RegistrationStatus,
 } from "./types";
 
 export const COUNTRIES: Country[] = ["NL", "DE", "BE"];
@@ -36,6 +37,16 @@ export const COUNTRY_META: Record<
     adjective: "Belgian",
     cities: ["Hasselt", "Liège", "Tongeren", "Leuven", "Genk", "Maasmechelen"],
   },
+};
+
+/** Labels for the registration options, shown in onboarding and on the dashboard. */
+export const REGISTRATION_STATUS_META: Record<
+  RegistrationStatus,
+  { label: string; short: string }
+> = {
+  registered: { label: "Yes", short: "Registered" },
+  not_registered: { label: "No", short: "Not registered" },
+  in_progress: { label: "Still in process", short: "Registration in progress" },
 };
 
 export const IMPACT_CATEGORY_META: Record<
