@@ -32,10 +32,7 @@ export function AttentionSummary({ impacts }: { impacts: Impact[] }) {
           {count} thing{count === 1 ? "" : "s"} need{count === 1 ? "s" : ""} your attention
         </p>
         <p className="text-sm text-action-foreground/80">
-          {needing
-            .slice(0, 3)
-            .map((i) => i.title)
-            .join(" · ")}
+          Start with the next practical step. The rest is waiting in your action centre.
         </p>
       </div>
       <Button asChild size="sm" className="shrink-0">

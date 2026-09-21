@@ -15,7 +15,7 @@ import { Card } from "@/components/ui/card";
 import type { Action } from "@/lib/types";
 import { formatDate } from "@/lib/utils";
 
-const PREVIEW_COUNT = 3;
+const PREVIEW_COUNT = 1;
 
 export function TodoSummary({ open, total }: { open: Action[]; total: number }) {
   const done = total - open.length;
@@ -70,7 +70,7 @@ export function TodoSummary({ open, total }: { open: Action[]; total: number }) 
 
         {open.length > PREVIEW_COUNT && (
           <p className="px-5 py-2.5 text-sm text-muted-foreground">
-            + {open.length - PREVIEW_COUNT} more
+            View {open.length - PREVIEW_COUNT} more task{open.length - PREVIEW_COUNT === 1 ? "" : "s"}
           </p>
         )}
       </Link>

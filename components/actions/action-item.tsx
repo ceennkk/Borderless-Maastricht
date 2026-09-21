@@ -44,9 +44,8 @@ export function ActionItem({ action, onToggle }: { action: Action; onToggle: () 
             <p className={cn("font-medium leading-snug", action.completed && "text-muted-foreground line-through")}>
               {action.title}
             </p>
-            <p className="text-sm leading-relaxed text-muted-foreground">{action.description}</p>
 
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 pt-1 text-xs text-muted-foreground">
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 pt-0.5 text-xs text-muted-foreground">
               <span className="inline-flex items-center gap-1.5">
                 <CategoryIcon category={action.category} className="size-3.5" />
                 {IMPACT_CATEGORY_META[action.category].label}
@@ -75,7 +74,10 @@ export function ActionItem({ action, onToggle }: { action: Action; onToggle: () 
 
       {open && (
         <div className="border-t border-border bg-surface/60 px-4 py-5 sm:px-5">
-          <ActionDetail action={action} />
+          <div className="space-y-4">
+            <p className="text-sm leading-relaxed text-muted-foreground">{action.description}</p>
+            <ActionDetail action={action} />
+          </div>
         </div>
       )}
     </Card>
